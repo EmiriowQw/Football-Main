@@ -1,0 +1,230 @@
+{
+  "@@locale": "en",
+  "settingsTitle": "Settings",
+  "darkTheme": "Dark theme",
+  "language": "Language",
+  "languageEnglish": "English",
+  "languageRussian": "Русский",
+  "cancel": "Cancel",
+  "save": "Save",
+  "retry": "Try again",
+  "login": "Log in",
+  "loginRequiredTitle": "Sign in required",
+  "loginRequiredMessage": "Sign in to your account to continue.",
+  "createGameLoginMessage": "Sign in to create a game.",
+  "joinGameLoginMessage": "Sign in to join.",
+  "authLockTitle": "Sign in to your account",
+  "authLockProfileMessage": "Sign in to see your profile and game history.",
+  "profileMyProfile": "My profile",
+  "profileEdit": "Edit profile",
+  "profileName": "Name",
+  "profileCity": "City",
+  "profileSkillLevel": "Skill level",
+  "profileGamesPlayed": "Games played: {count}",
+  "@profileGamesPlayed": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "profileCityLine": "City: {city}",
+  "@profileCityLine": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "profileLevelLine": "Level: {level}",
+  "@profileLevelLine": {
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "profileEnterName": "Enter your name",
+  "profileNotSignedIn": "Not signed in",
+  "skillBeginner": "Beginner",
+  "skillIntermediate": "Intermediate",
+  "skillAdvanced": "Advanced",
+  "skillPro": "Pro",
+  "profileHistory": "History",
+  "profileOpenHistory": "Open activity history",
+  "logout": "Log out",
+  "deleteAccount": "Delete account",
+  "deleteAccountConfirm": "Delete account?",
+  "deleteAccountConfirmMessage": "Your account will be deleted. Cancel future bookings first. Historical rosters are retained.",
+  "gamesTitle": "Upcoming games",
+  "gamesEmptyTitle": "No games yet",
+  "gamesEmptySubtitle": "Create a game and call players to the court.",
+  "gamesCreate": "Create game",
+  "gamesFull": "Game is full",
+  "courtsSectionTitle": "Places to play",
+  "courtsTitle": "Courts",
+  "courtsNotFound": "No courts found",
+  "courtsFilterAll": "All",
+  "courtsFilterIndoor": "Indoor",
+  "courtsFilterOutdoor": "Outdoor",
+  "courtsFilterFree": "Free",
+  "courtsLoadError": "Failed to load courts",
+  "courtsOpenHours": "Opening hours",
+  "courtsWhatsappError": "Could not open WhatsApp",
+  "done": "Done",
+  "createGameTitle": "Host a game",
+  "createGameTitleLabel": "Title *",
+  "createGameTitleHint": "e.g. Evening Run, 3x3 Tournament",
+  "createGameTitleError": "Enter a title",
+  "createGameDescription": "Description",
+  "createGameDescriptionHint": "e.g. 3x3, intermediate, bring dark tee",
+  "createGameCourtLabel": "Court *",
+  "createGameLoadingCourts": "Loading courts…",
+  "createGameChooseCourt": "Choose a court",
+  "createGameLocationLabel": "Location *",
+  "createGameLocationHint": "Paste a map link or address",
+  "createGameLocationError": "Enter a location",
+  "createGameDate": "Date *",
+  "createGameTime": "Time *",
+  "createGameMaxPlayers": "Max players *",
+  "createGameMaxPlayersError": "Enter number of players",
+  "createGameMaxPlayersRange": "Between 2 and 20",
+  "createGameVisibility": "Visibility",
+  "visibilityPublic": "Public",
+  "visibilityPrivate": "Private",
+  "visibilityPublicHint": "Anyone can find and join",
+  "visibilityPrivateHint": "Only people with the link",
+  "historyTitle": "History",
+  "historyEmpty": "No games yet. Join or host one!",
+  "createGamePayment": "Payment",
+  "paymentOnline": "Online",
+  "paymentCash": "Cash",
+  "paymentFree": "Free",
+  "inDevelopment": "In development",
+  "createGameAmount": "Amount to bring",
+  "createGameAmountHint": "e.g. 500",
+  "createGameSubmit": "Host game",
+  "createGameSelectDateTime": "Select date and time",
+  "createGameInvalidAmount": "Enter a valid amount",
+  "createGameSuccess": "Run created successfully!",
+  "createGameYou": "You",
+  "homeLocation": "Bishkek, Kyrgyzstan",
+  "tickerMessage1": "12 players just checked into Vostok-5... 3 spots for 5v5 at Bishkek Arena at 19:00",
+  "tickerMessage2": "New run at 18:30 at Spartak — 4/10 spots",
+  "tickerMessage3": "Vostok-5 is hot right now — 8 people on the court",
+  "gamesSpots": "Spots: {spots}",
+  "gamesJoin": "Join",
+  "gamesLeave": "Leave game",
+  "fdRed": "Red",
+  "fdBlue": "Blue",
+  "fdYellow": "Yellow",
+  "fdGreen": "Green",
+  "fdStartedError": "The game has started. Your booking is read-only.",
+  "fdFullError": "Those places were just taken. Check the updated roster and reduce your group size.",
+  "fdChangeTeamHint": "To change teams, cancel your booking and book again.",
+  "fdInvalidError": "Check the number of places and your friends’ names.",
+  "fdNetworkError": "Could not confirm the data. Check your connection and try again.",
+  "fdSignIn": "Sign in with Google",
+  "fdChooseTeam": "Choose a team",
+  "fdYourBooking": "Your booking",
+  "fdClose": "Close",
+  "fdReadOnly": "Game started · read-only",
+  "fdOffline": "Waiting for the server. Availability may be outdated; booking resumes when connected.",
+  "fdSelected": "Selected",
+  "fdFull": "Full",
+  "fdSelect": "Select",
+  "fdPlacesLabel": "Places, including you",
+  "fdFewer": "Fewer places",
+  "fdMore": "More places",
+  "fdWholeTeam": "All available places",
+  "fdFriendsHint": "Friends’ names are optional and visible in the roster. You take the first place; unnamed friends appear as your guests.",
+  "fdSaving": "Saving…",
+  "fdBook": "Book places",
+  "fdCancelBooking": "Cancel booking",
+  "fdCancelConfirm": "All places in your booking will become available to other players.",
+  "fdKeep": "Keep booking",
+  "fdSchedule": "Schedule",
+  "fdMyBookings": "My bookings",
+  "fdHero": "Pick your pitch.\nBring your people.",
+  "fdSubtitle": "Every evening · 3 pitches · 4 teams\nFootball starts with you.",
+  "fdTimezone": "Bishkek · UTC+6 time",
+  "fdPreviousDay": "Previous day",
+  "fdNextDay": "Next day",
+  "fdToday": "Today",
+  "fdNoBookings": "You have no bookings for this date. Pick a game in the schedule.",
+  "fdPlayer": "Player",
+  "fdSaved": "Booking confirmed",
+  "fdCancelled": "Booking cancelled, places released",
+  "fdRules": "4 teams per pitch. The goalkeeper is included in the format. Groups stay on one team. Edit or cancel before kickoff. No in-app payments.",
+  "fdPlaceholder": "Pitch names and fees are placeholders. Confirm the venue and details with Football Day.",
+  "fdViewRoster": "View roster",
+  "fdPitch": "Pitch {number}",
+  "@fdPitch": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "fdFee": "{amount} KGS per player · information only",
+  "@fdFee": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "fdPlaces": "{free} / {capacity} free",
+  "@fdPlaces": {
+    "placeholders": {
+      "free": {
+        "type": "int"
+      },
+      "capacity": {
+        "type": "int"
+      }
+    }
+  },
+  "fdTotalFree": "{free} of {capacity} places available",
+  "@fdTotalFree": {
+    "placeholders": {
+      "free": {
+        "type": "int"
+      },
+      "capacity": {
+        "type": "int"
+      }
+    }
+  },
+  "fdGuest": "Guest of {name}",
+  "@fdGuest": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "fdFriend": "Friend {number} (optional)",
+  "@fdFriend": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "fdLoginTagline": "Your football. Every evening.",
+  "fdBrowse": "Browse without signing in",
+  "fdLoginNotice": "Sign in with Google to book places. You can browse the schedule without an account.",
+  "fdOnboardTitle1": "Pick a game",
+  "fdOnboardBody1": "A ready schedule every day: 18:00 and 19:00, three pitches in Bishkek.",
+  "fdOnboardTitle2": "Bring your people",
+  "fdOnboardBody2": "Choose a team colour and book for yourself and friends. Your whole group stays together.",
+  "fdOnboardTitle3": "See you on the pitch",
+  "fdOnboardBody3": "Edit your group size or cancel before kickoff. Fees are informational; there are no in-app payments.",
+  "fdSkip": "Skip",
+  "fdNext": "Next",
+  "fdStart": "Get started",
+  "fdCancelBeforeDelete": "Cancel your upcoming bookings in My bookings before deleting your account.",
+  "fdDemoSignIn": "Sign in as demo player",
+  "fdDemoNotice": "Local demo. Uses a test account and test bookings."
+}

@@ -1,0 +1,25 @@
+{
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "football-day",
+          "appId": "1:1044539186696:android:2adc7f40fe48a26a8ebbbd",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "football-day",
+          "configurations": {
+            "android": "1:1044539186696:android:2adc7f40fe48a26a8ebbbd"
+          }
+        }
+      }
+    }
+  }
+}

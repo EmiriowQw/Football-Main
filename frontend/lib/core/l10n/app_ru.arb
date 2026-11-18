@@ -1,0 +1,209 @@
+{
+  "@@locale": "ru",
+  "settingsTitle": "Настройки",
+  "darkTheme": "Тёмная тема",
+  "language": "Язык",
+  "languageEnglish": "English",
+  "languageRussian": "Русский",
+  "cancel": "Отмена",
+  "save": "Сохранить",
+  "retry": "Попробовать снова",
+  "login": "Войти",
+  "loginRequiredTitle": "Требуется вход",
+  "loginRequiredMessage": "Войдите в аккаунт, чтобы продолжить.",
+  "createGameLoginMessage": "Войдите, чтобы создать игру.",
+  "joinGameLoginMessage": "Войдите, чтобы присоединиться.",
+  "authLockTitle": "Войдите в аккаунт",
+  "authLockProfileMessage": "Войдите, чтобы видеть профиль и историю игр.",
+  "profileMyProfile": "Мой профиль",
+  "profileEdit": "Редактировать профиль",
+  "profileName": "Имя",
+  "profileCity": "Город",
+  "profileSkillLevel": "Уровень",
+  "profileGamesPlayed": "Сыграно игр: {count}",
+  "profileCityLine": "Город: {city}",
+  "profileLevelLine": "Уровень: {level}",
+  "profileEnterName": "Введите имя",
+  "profileNotSignedIn": "Вы не вошли",
+  "skillBeginner": "Новичок",
+  "skillIntermediate": "Средний",
+  "skillAdvanced": "Продвинутый",
+  "skillPro": "Профи",
+  "profileHistory": "История",
+  "profileOpenHistory": "Открыть историю активности",
+  "logout": "Выйти",
+  "deleteAccount": "Удалить аккаунт",
+  "deleteAccountConfirm": "Удалить аккаунт?",
+  "deleteAccountConfirmMessage": "Аккаунт будет удалён. Сначала отмените будущие брони. Исторические составы сохраняются.",
+  "gamesTitle": "Предстоящие игры",
+  "gamesEmptyTitle": "Пока нет игр",
+  "gamesEmptySubtitle": "Создайте игру и позовите игроков на площадку.",
+  "gamesCreate": "Создать игру",
+  "gamesFull": "Мест нет",
+  "courtsSectionTitle": "Площадки для игры",
+  "courtsTitle": "Площадки",
+  "courtsNotFound": "Площадки не найдены",
+  "courtsFilterAll": "Все",
+  "courtsFilterIndoor": "Зал",
+  "courtsFilterOutdoor": "Улица",
+  "courtsFilterFree": "Бесплатно",
+  "courtsLoadError": "Не удалось загрузить площадки",
+  "courtsOpenHours": "Время работы",
+  "courtsWhatsappError": "Не удалось открыть WhatsApp",
+  "done": "Готово",
+  "createGameTitle": "Создать игру",
+  "createGameTitleLabel": "Название *",
+  "createGameTitleHint": "напр. Вечерний ран, Турнир 3x3",
+  "createGameTitleError": "Введите название",
+  "createGameDescription": "Описание",
+  "createGameDescriptionHint": "напр. 3x3, средний уровень, тёмная форма",
+  "createGameCourtLabel": "Площадка *",
+  "createGameLoadingCourts": "Загрузка площадок…",
+  "createGameChooseCourt": "Выберите площадку",
+  "createGameLocationLabel": "Локация *",
+  "createGameLocationHint": "Вставьте ссылку на карту или адрес",
+  "createGameLocationError": "Укажите локацию",
+  "createGameDate": "Дата *",
+  "createGameTime": "Время *",
+  "createGameMaxPlayers": "Макс. игроков *",
+  "createGameMaxPlayersError": "Введите число игроков",
+  "createGameMaxPlayersRange": "От 2 до 20",
+  "createGameVisibility": "Видимость",
+  "visibilityPublic": "Публичная",
+  "visibilityPrivate": "Приватная",
+  "visibilityPublicHint": "Каждый может найти и присоединиться",
+  "visibilityPrivateHint": "Только по ссылке",
+  "historyTitle": "История",
+  "historyEmpty": "Пока нет игр. Присоединитесь или создайте!",
+  "createGamePayment": "Оплата",
+  "paymentOnline": "Онлайн",
+  "paymentCash": "Наличные",
+  "paymentFree": "Бесплатно",
+  "inDevelopment": "В разработке",
+  "createGameAmount": "Сумма с собой",
+  "createGameAmountHint": "напр. 500",
+  "createGameSubmit": "Создать игру",
+  "createGameSelectDateTime": "Выберите дату и время",
+  "createGameInvalidAmount": "Введите корректную сумму",
+  "createGameSuccess": "Ран создан успешно!",
+  "createGameYou": "Вы",
+  "homeLocation": "Бишкек, Кыргызстан",
+  "tickerMessage1": "12 игроков зачекинились на Восток-5... 3 места на 5x5 в Бишкек Арена в 19:00",
+  "tickerMessage2": "Новый ран в 18:30 на Спартак — 4/10 мест",
+  "tickerMessage3": "Восток-5 сейчас горячая точка — 8 человек на площадке",
+  "gamesSpots": "Мест: {spots}",
+  "gamesJoin": "Присоединиться",
+  "gamesLeave": "Выйти из игры",
+  "fdRed": "Красная",
+  "fdBlue": "Синяя",
+  "fdYellow": "Жёлтая",
+  "fdGreen": "Зелёная",
+  "fdStartedError": "Игра уже началась. Бронь доступна только для просмотра.",
+  "fdFullError": "Места уже заняли. Проверьте обновлённый состав и уменьшите количество мест.",
+  "fdChangeTeamHint": "Для смены команды отмените бронь и запишитесь заново.",
+  "fdInvalidError": "Проверьте количество мест и имена друзей.",
+  "fdNetworkError": "Не удалось подтвердить данные. Проверьте соединение и повторите попытку.",
+  "fdSignIn": "Войти через Google",
+  "fdChooseTeam": "Выбрать команду",
+  "fdYourBooking": "Ваша бронь",
+  "fdClose": "Закрыть",
+  "fdReadOnly": "Игра началась · только просмотр",
+  "fdOffline": "Нет подтверждения сервера. Данные могут быть устаревшими; запись станет доступна после подключения.",
+  "fdSelected": "Выбрана",
+  "fdFull": "Мест нет",
+  "fdSelect": "Выбрать",
+  "fdPlacesLabel": "Места, включая вас",
+  "fdFewer": "Меньше мест",
+  "fdMore": "Больше мест",
+  "fdWholeTeam": "Все свободные места",
+  "fdFriendsHint": "Имена друзей необязательны и видны в составе. Вы занимаете первое место; остальные без имени — ваши гости.",
+  "fdSaving": "Сохраняем…",
+  "fdBook": "Забронировать",
+  "fdCancelBooking": "Отменить бронь",
+  "fdCancelConfirm": "Все места вашей брони снова станут доступны другим игрокам.",
+  "fdKeep": "Оставить бронь",
+  "fdSchedule": "Расписание",
+  "fdMyBookings": "Мои брони",
+  "fdHero": "Выбери поле.\nСобери своих.",
+  "fdSubtitle": "Каждый вечер · 3 поля · 4 команды\nФутбол начинается с тебя.",
+  "fdTimezone": "Бишкек · время UTC+6",
+  "fdPreviousDay": "Предыдущий день",
+  "fdNextDay": "Следующий день",
+  "fdToday": "Сегодня",
+  "fdNoBookings": "На эту дату у вас пока нет броней. Выберите игру в расписании.",
+  "fdPlayer": "Игрок",
+  "fdSaved": "Бронь подтверждена",
+  "fdCancelled": "Бронь отменена, места освобождены",
+  "fdRules": "4 команды на каждом поле. Вратарь включён в формат. Вся группа играет в одной команде. Изменение и отмена — до начала игры. Оплаты в приложении нет.",
+  "fdPlaceholder": "Названия полей и тариф демонстрационные. Адрес и условия уточняйте у Football Day.",
+  "fdViewRoster": "Посмотреть состав",
+  "fdPitch": "Поле {number}",
+  "@fdPitch": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "fdFee": "{amount} сом за игрока · справочно",
+  "@fdFee": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "fdPlaces": "{free} / {capacity} свободно",
+  "@fdPlaces": {
+    "placeholders": {
+      "free": {
+        "type": "int"
+      },
+      "capacity": {
+        "type": "int"
+      }
+    }
+  },
+  "fdTotalFree": "Свободно {free} из {capacity} мест",
+  "@fdTotalFree": {
+    "placeholders": {
+      "free": {
+        "type": "int"
+      },
+      "capacity": {
+        "type": "int"
+      }
+    }
+  },
+  "fdGuest": "Гость {name}",
+  "@fdGuest": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "fdFriend": "Друг {number} (необязательно)",
+  "@fdFriend": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "fdLoginTagline": "Твой футбол. Каждый вечер.",
+  "fdBrowse": "Посмотреть расписание без входа",
+  "fdLoginNotice": "Google-вход нужен для бронирования мест. Расписание можно смотреть без аккаунта.",
+  "fdOnboardTitle1": "Выбери игру",
+  "fdOnboardBody1": "Готовое расписание каждый день: 18:00 и 19:00, три поля в Бишкеке.",
+  "fdOnboardTitle2": "Собери своих",
+  "fdOnboardBody2": "Выбери цвет команды и забронируй места для себя и друзей. Вся группа — в одной команде.",
+  "fdOnboardTitle3": "Выходи на поле",
+  "fdOnboardBody3": "Меняй количество мест и отменяй бронь до начала игры. Стоимость справочная, без оплаты в приложении.",
+  "fdSkip": "Пропустить",
+  "fdNext": "Далее",
+  "fdStart": "Начать",
+  "fdCancelBeforeDelete": "Сначала отмените будущие брони в разделе «Мои брони», затем повторите удаление аккаунта.",
+  "fdDemoSignIn": "Войти как демо-игрок",
+  "fdDemoNotice": "Локальное демо. Используется тестовый аккаунт и тестовые брони."
+}

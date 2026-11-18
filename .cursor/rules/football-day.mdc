@@ -1,0 +1,12 @@
+---
+description: Football Day product and engineering rules
+alwaysApply: true
+---
+
+Read `prompts/AI_INSTRUCTIONS.md` and `prompts/CONTEXT_ROUTER.md`.
+Use `prompts/football-day-concept.md` as the product contract.
+Games are preset; players only book, edit their reservation, or cancel before kickoff.
+No organizer accounts, game creation, payments, results, or statistics.
+Keep groups on one team; enforce capacity in transactions and Firestore Rules.
+Keep the existing Flutter structure and package identifier.
+Update documentation and meaningful tests together with behavior.
