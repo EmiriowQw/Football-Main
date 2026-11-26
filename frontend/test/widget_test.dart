@@ -168,6 +168,31 @@ void main() {
     },
   );
 
+  testWidgets('guest can preview the five spots on a narrow 4+1 pitch', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(360, 720);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    await tester.pumpWidget(
+      shell(
+        FootballBookingPage(
+          gameId: repository.games[2].id,
+          uid: null,
+          bookerName: '',
+        ),
+        locale: const Locale('en'),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byTooltip('Goalkeeper'), findsOneWidget);
+    expect(find.byTooltip('Defender'), findsOneWidget);
+    expect(find.byTooltip('Midfielder'), findsNWidgets(2));
+    expect(find.byTooltip('Forward'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('whole-team booking includes booker and optional friends', (
     tester,
   ) async {
@@ -192,21 +217,28 @@ void main() {
     await tester.tap(find.text('Все свободные места'));
     await tester.pumpAndSettle();
     expect(find.byType(TextField), findsNWidgets(5));
-    expect(
-      tester
-          .widget<ChoiceChip>(find.widgetWithText(ChoiceChip, 'Без разницы'))
-          .selected,
-      isTrue,
-    );
-    await tester.tap(find.widgetWithText(ChoiceChip, 'Защитник'));
+    expect(find.text('Без разницы'), findsOneWidget);
+    expect(find.byTooltip('Защитник'), findsNWidgets(2));
+    expect(find.byTooltip('Полузащитник'), findsNWidgets(2));
+    final defender = find.byTooltip('Защитник').first;
+    await tester.ensureVisible(defender);
+    await tester.tap(defender);
     await tester.pumpAndSettle();
-    await tester.enterText(find.byType(TextField).first, 'Sam');
-    final friendPosition = find.byKey(const ValueKey('friend-position-0'));
+    await tester.tap(find.widgetWithText(TextButton, 'Без разницы'));
+    await tester.pumpAndSettle();
+    final selected = find.byKey(const ValueKey('formation-selected-position'));
+    expect(tester.widget<Text>(selected).data, 'Без разницы');
+    await tester.tap(defender);
+    await tester.pumpAndSettle();
+    final friendPosition = find.byKey(const ValueKey('formation-player-1'));
     await tester.ensureVisible(friendPosition);
     await tester.tap(friendPosition);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Вратарь').last);
+    final goalkeeper = find.byTooltip('Вратарь');
+    await tester.ensureVisible(goalkeeper);
+    await tester.tap(goalkeeper);
     await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField).first, 'Sam');
     await tester.ensureVisible(find.text('Забронировать'));
     await tester.tap(find.text('Забронировать'));
     await tester.pumpAndSettle();

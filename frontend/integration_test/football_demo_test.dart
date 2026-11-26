@@ -64,19 +64,22 @@ void main() {
     );
     await tester.tap(find.byTooltip('Больше мест'));
     await tester.pumpAndSettle();
-    final defender = find.widgetWithText(ChoiceChip, 'Защитник');
+    final defender = find.byTooltip('Защитник').first;
     await tester.ensureVisible(defender);
-    await tapText('Защитник');
+    await tester.tap(defender);
+    await tester.pumpAndSettle();
     final friend = find.byType(TextField).first;
     await tester.ensureVisible(friend);
     await tester.enterText(friend, 'Марат');
     FocusManager.instance.primaryFocus?.unfocus();
     await tester.pumpAndSettle();
-    final friendPosition = find.byKey(const ValueKey('friend-position-0'));
+    final friendPosition = find.byKey(const ValueKey('formation-player-1'));
     await tester.ensureVisible(friendPosition);
     await tester.tap(friendPosition);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Вратарь').last);
+    final goalkeeper = find.byTooltip('Вратарь');
+    await tester.ensureVisible(goalkeeper);
+    await tester.tap(goalkeeper);
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.text('Забронировать'));
     await tapText('Забронировать');
@@ -86,14 +89,12 @@ void main() {
     await tapText('Мои брони');
     await tapText('Ваша бронь');
     await waitFor(defender);
-    expect(tester.widget<ChoiceChip>(defender).selected, isTrue);
-    expect(
-      tester
-          .widget<DropdownButtonFormField>(friendPosition)
-          .initialValue
-          .toString(),
-      endsWith('.goalkeeper'),
-    );
+    final selected = find.byKey(const ValueKey('formation-selected-position'));
+    expect(tester.widget<Text>(selected).data, 'Защитник');
+    await tester.ensureVisible(friendPosition);
+    await tester.tap(friendPosition);
+    await tester.pumpAndSettle();
+    expect(tester.widget<Text>(selected).data, 'Вратарь');
     await tester.ensureVisible(friend);
     expect(find.text('Марат'), findsWidgets);
     await tester.enterText(friend, 'Данияр');

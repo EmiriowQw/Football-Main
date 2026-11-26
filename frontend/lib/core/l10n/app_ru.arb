@@ -215,19 +215,16 @@
   "fdPositionDefender": "Защитник",
   "fdPositionMidfielder": "Полузащитник",
   "fdPositionForward": "Нападающий",
-  "fdYourPosition": "Твоя позиция",
-  "fdPositionHint": "По желанию. Это подсказка для состава, а не распределение по позициям.",
-  "fdFriendPosition": "Позиция друга {number}",
+  "fdFormation": "Схема команды",
+  "fdFormationYou": "Ты",
+  "fdPositionHint": "Нажми на точку на поле, чтобы указать желаемую роль.",
+  "fdKeeperShort": "ВРТ",
+  "fdDefenderShort": "ЗАЩ",
+  "fdMidfieldShort": "ПЗ",
+  "fdForwardShort": "НАП",
   "fdTicketPlaces": "{count, plural, one{{count} место} few{{count} места} other{{count} мест}}",
   "fdEmptyRoster": "В составе пока никого нет",
   "fdInTheGame": "Ты в игре",
-  "@fdFriendPosition": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
   "@fdTicketPlaces": {
     "placeholders": {
       "count": {

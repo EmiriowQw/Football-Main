@@ -554,15 +554,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fdPositionForward => 'Forward';
 
   @override
-  String get fdYourPosition => 'Your position';
+  String get fdFormation => 'Team formation';
 
   @override
-  String get fdPositionHint => 'Optional. This is a preference for the roster.';
+  String get fdFormationYou => 'You';
 
   @override
-  String fdFriendPosition(int number) {
-    return 'Friend $number’s position';
-  }
+  String get fdPositionHint =>
+      'Tap a spot on the pitch to set your preferred role.';
+
+  @override
+  String get fdKeeperShort => 'GK';
+
+  @override
+  String get fdDefenderShort => 'DF';
+
+  @override
+  String get fdMidfieldShort => 'MF';
+
+  @override
+  String get fdForwardShort => 'FW';
 
   @override
   String fdTicketPlaces(int count) {

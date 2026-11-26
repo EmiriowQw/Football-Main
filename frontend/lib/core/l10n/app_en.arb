@@ -236,19 +236,16 @@
   "fdPositionDefender": "Defender",
   "fdPositionMidfielder": "Midfielder",
   "fdPositionForward": "Forward",
-  "fdYourPosition": "Your position",
-  "fdPositionHint": "Optional. This is a preference for the roster.",
-  "fdFriendPosition": "Friend {number}’s position",
+  "fdFormation": "Team formation",
+  "fdFormationYou": "You",
+  "fdPositionHint": "Tap a spot on the pitch to set your preferred role.",
+  "fdKeeperShort": "GK",
+  "fdDefenderShort": "DF",
+  "fdMidfieldShort": "MF",
+  "fdForwardShort": "FW",
   "fdTicketPlaces": "{count, plural, one{{count} spot} other{{count} spots}}",
   "fdEmptyRoster": "No players in the roster yet",
   "fdInTheGame": "You’re in",
-  "@fdFriendPosition": {
-    "placeholders": {
-      "number": {
-        "type": "int"
-      }
-    }
-  },
   "@fdTicketPlaces": {
     "placeholders": {
       "count": {

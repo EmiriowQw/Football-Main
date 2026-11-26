@@ -7,6 +7,7 @@ import 'package:basketvibe/core/l10n/app_localizations.dart';
 import 'package:basketvibe/features/games/domain/entities/football_game.dart';
 import 'package:basketvibe/features/games/presentation/cubit/football_cubit.dart';
 import 'package:basketvibe/features/games/presentation/widgets/football_arena.dart';
+import 'package:basketvibe/features/games/presentation/widgets/football_formation.dart';
 import 'package:basketvibe/features/games/presentation/widgets/football_labels.dart';
 
 class FootballBookingPage extends StatefulWidget {
@@ -33,6 +34,7 @@ class _FootballBookingPageState extends State<FootballBookingPage> {
   FootballTeam? _team;
   FootballPosition _position = FootballPosition.any;
   int _places = 1;
+  int _formationPlayer = 0;
   bool _initialized = false;
   BookingFailure? _failure;
   Booking? _confirmed;
@@ -293,6 +295,9 @@ class _FootballBookingPageState extends State<FootballBookingPage> {
                                         1,
                                         game.editablePlaces(team, widget.uid!),
                                       );
+                                      if (_formationPlayer >= _places) {
+                                        _formationPlayer = 0;
+                                      }
                                       _failure = null;
                                     });
                                   },
@@ -315,24 +320,10 @@ class _FootballBookingPageState extends State<FootballBookingPage> {
                               locked: locked || _team == null,
                             ),
                             const SizedBox(height: 16),
-                            _SectionLabel(l.fdYourPosition),
-                            const SizedBox(height: 4),
-                            Text(
-                              l.fdPositionHint,
-                              style: const TextStyle(
-                                color: FootballArena.muted,
-                                fontSize: 12,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            _PositionChips(
-                              position: _position,
-                              onChanged: locked
-                                  ? null
-                                  : (value) => setState(() {
-                                      _position = value;
-                                      _failure = null;
-                                    }),
+                            _formationPanel(
+                              context,
+                              game.pitch,
+                              locked: locked,
                             ),
                             AnimatedSize(
                               alignment: Alignment.topCenter,
@@ -349,6 +340,8 @@ class _FootballBookingPageState extends State<FootballBookingPage> {
                                 color: FootballArena.muted,
                               ),
                             ),
+                            const SizedBox(height: 16),
+                            _formationPanel(context, game.pitch, locked: true),
                           ],
                         ],
                         const SizedBox(height: 16),
@@ -392,6 +385,9 @@ class _FootballBookingPageState extends State<FootballBookingPage> {
                       ? null
                       : () => setState(() {
                           _places--;
+                          if (_formationPlayer >= _places) {
+                            _formationPlayer = 0;
+                          }
                           _failure = null;
                         }),
                   icon: const Icon(Icons.remove_circle_outline),
@@ -426,6 +422,9 @@ class _FootballBookingPageState extends State<FootballBookingPage> {
                     ? null
                     : () => setState(() {
                         _places = available;
+                        if (_formationPlayer >= _places) {
+                          _formationPlayer = 0;
+                        }
                         _failure = null;
                       }),
                 child: Text(l.fdWholeTeam),
@@ -434,6 +433,98 @@ class _FootballBookingPageState extends State<FootballBookingPage> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _formationPanel(
+    BuildContext context,
+    PitchPreset pitch, {
+    required bool locked,
+  }) {
+    final l = AppLocalizations.of(context);
+    final guest = widget.uid == null;
+    final player = _formationPlayer;
+    final position = player == 0 ? _position : _friendPositions[player - 1];
+    void select(FootballPosition value) {
+      HapticFeedback.selectionClick();
+      setState(() {
+        if (player == 0) {
+          _position = value;
+        } else {
+          _friendPositions[player - 1] = value;
+        }
+        _failure = null;
+      });
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            Expanded(child: _SectionLabel(l.fdFormation)),
+            Text(
+              pitch.format,
+              style: const TextStyle(
+                color: FootballArena.accent,
+                fontSize: 16,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+          ],
+        ),
+        if (!guest) ...[
+          const SizedBox(height: 4),
+          Text(
+            l.fdPositionHint,
+            style: const TextStyle(color: FootballArena.muted, fontSize: 12),
+          ),
+          if (_places > 1)
+            Wrap(
+              spacing: 6,
+              children: [
+                for (var i = 0; i < _places; i++)
+                  ChoiceChip(
+                    key: ValueKey('formation-player-$i'),
+                    label: Text(i == 0 ? l.fdFormationYou : l.fdFriend(i)),
+                    selected: player == i,
+                    onSelected: locked
+                        ? null
+                        : (_) => setState(() => _formationPlayer = i),
+                  ),
+              ],
+            ),
+        ],
+        const SizedBox(height: 8),
+        FootballFormation(
+          pitch: pitch,
+          position: position,
+          onChanged: locked ? null : select,
+        ),
+        if (!guest)
+          Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Text(
+                  positionLabel(l, position),
+                  key: const ValueKey('formation-selected-position'),
+                  style: const TextStyle(
+                    color: FootballArena.ink,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              if (position != FootballPosition.any)
+                TextButton(
+                  onPressed: locked ? null : () => select(FootballPosition.any),
+                  child: Text(l.fdPositionAny),
+                ),
+            ],
+          ),
+      ],
     );
   }
 
@@ -460,30 +551,6 @@ class _FootballBookingPageState extends State<FootballBookingPage> {
               hintText: l.fdGuest(widget.bookerName),
               counterText: '',
             ),
-          ),
-          const SizedBox(height: 6),
-          DropdownButtonFormField<FootballPosition>(
-            key: ValueKey('friend-position-$i'),
-            initialValue: _friendPositions[i],
-            isExpanded: true,
-            decoration: InputDecoration(labelText: l.fdFriendPosition(i + 1)),
-            items: [
-              for (final position in FootballPosition.values)
-                DropdownMenuItem(
-                  value: position,
-                  child: Text(positionLabel(l, position)),
-                ),
-            ],
-            onChanged: locked
-                ? null
-                : (value) {
-                    if (value != null) {
-                      setState(() {
-                        _friendPositions[i] = value;
-                        _failure = null;
-                      });
-                    }
-                  },
           ),
         ],
       ],
@@ -669,29 +736,6 @@ class _Jersey extends CustomPainter {
   @override
   bool shouldRepaint(covariant _Jersey oldDelegate) =>
       oldDelegate.color != color;
-}
-
-class _PositionChips extends StatelessWidget {
-  const _PositionChips({required this.position, required this.onChanged});
-  final FootballPosition position;
-  final ValueChanged<FootballPosition>? onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context);
-    return Wrap(
-      spacing: 6,
-      runSpacing: 3,
-      children: [
-        for (final option in FootballPosition.values)
-          ChoiceChip(
-            label: Text(positionLabel(l, option)),
-            selected: position == option,
-            onSelected: onChanged == null ? null : (_) => onChanged!(option),
-          ),
-      ],
-    );
-  }
 }
 
 class _Roster extends StatelessWidget {

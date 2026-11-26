@@ -20,6 +20,7 @@ frontend/
     presentation/pages/football_day_page.dart
     presentation/pages/football_booking_page.dart
     presentation/widgets/football_arena.dart
+    presentation/widgets/football_formation.dart
   lib/features/auth/              существующий Google-вход
   lib/features/profile/           профиль и настройки
   test/                          unit/widget-тесты

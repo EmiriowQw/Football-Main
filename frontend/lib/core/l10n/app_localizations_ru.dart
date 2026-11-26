@@ -553,16 +553,26 @@ class AppLocalizationsRu extends AppLocalizations {
   String get fdPositionForward => 'Нападающий';
 
   @override
-  String get fdYourPosition => 'Твоя позиция';
+  String get fdFormation => 'Схема команды';
+
+  @override
+  String get fdFormationYou => 'Ты';
 
   @override
   String get fdPositionHint =>
-      'По желанию. Это подсказка для состава, а не распределение по позициям.';
+      'Нажми на точку на поле, чтобы указать желаемую роль.';
 
   @override
-  String fdFriendPosition(int number) {
-    return 'Позиция друга $number';
-  }
+  String get fdKeeperShort => 'ВРТ';
+
+  @override
+  String get fdDefenderShort => 'ЗАЩ';
+
+  @override
+  String get fdMidfieldShort => 'ПЗ';
+
+  @override
+  String get fdForwardShort => 'НАП';
 
   @override
   String fdTicketPlaces(int count) {

@@ -1100,23 +1100,47 @@ abstract class AppLocalizations {
   /// **'Forward'**
   String get fdPositionForward;
 
-  /// No description provided for @fdYourPosition.
+  /// No description provided for @fdFormation.
   ///
   /// In en, this message translates to:
-  /// **'Your position'**
-  String get fdYourPosition;
+  /// **'Team formation'**
+  String get fdFormation;
+
+  /// No description provided for @fdFormationYou.
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get fdFormationYou;
 
   /// No description provided for @fdPositionHint.
   ///
   /// In en, this message translates to:
-  /// **'Optional. This is a preference for the roster.'**
+  /// **'Tap a spot on the pitch to set your preferred role.'**
   String get fdPositionHint;
 
-  /// No description provided for @fdFriendPosition.
+  /// No description provided for @fdKeeperShort.
   ///
   /// In en, this message translates to:
-  /// **'Friend {number}’s position'**
-  String fdFriendPosition(int number);
+  /// **'GK'**
+  String get fdKeeperShort;
+
+  /// No description provided for @fdDefenderShort.
+  ///
+  /// In en, this message translates to:
+  /// **'DF'**
+  String get fdDefenderShort;
+
+  /// No description provided for @fdMidfieldShort.
+  ///
+  /// In en, this message translates to:
+  /// **'MF'**
+  String get fdMidfieldShort;
+
+  /// No description provided for @fdForwardShort.
+  ///
+  /// In en, this message translates to:
+  /// **'FW'**
+  String get fdForwardShort;
 
   /// No description provided for @fdTicketPlaces.
   ///
