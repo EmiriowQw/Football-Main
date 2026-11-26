@@ -139,7 +139,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('FOOTBALL DAY'), findsOneWidget);
       expect(find.text('БЛИЖАЙШАЯ ИГРА'), findsOneWidget);
-      expect(find.textContaining('Поле 1'), findsWidgets);
+      expect(find.textContaining('Арена · крытое поле'), findsWidgets);
       expect(find.byType(FloatingActionButton), findsNothing);
       expect(tester.takeException(), isNull);
       final boundary =
@@ -157,10 +157,15 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byType(FootballBookingPage), findsOneWidget);
       expect(find.text('Бронь поля'), findsOneWidget);
-      expect(find.textContaining('Поле 1'), findsOneWidget);
+      expect(find.textContaining('Арена · крытое поле'), findsOneWidget);
       expect(find.text('Войти через Google'), findsOneWidget);
       await tester.binding.handlePopRoute();
       await tester.pumpAndSettle();
+      await tester.tap(find.text('Площадки'));
+      await tester.pumpAndSettle();
+      expect(find.text('КФУ'), findsOneWidget);
+      expect(find.text('7+1 · 1000 сом'), findsOneWidget);
+      expect(find.textContaining('23:00–01:00'), findsOneWidget);
       await tester.tap(find.text('Мои брони'));
       await tester.pumpAndSettle();
       expect(find.text('Войти через Google'), findsOneWidget);

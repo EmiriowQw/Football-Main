@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:basketvibe/core/l10n/app_localizations.dart';
 import 'package:basketvibe/features/games/domain/entities/football_game.dart';
+import 'package:basketvibe/features/games/presentation/widgets/football_venue_photo.dart';
 
 class FootballArena {
   static const background = Color(0xff0d1711);
@@ -77,6 +78,7 @@ class ArenaScoreboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
+    final venue = FootballVenue.forPitch(game.pitch);
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(19),
@@ -89,37 +91,55 @@ class ArenaScoreboard extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(19),
-        child: CustomPaint(
-          painter: const _PitchLines(),
-          child: Padding(
-            padding: const EdgeInsets.all(18),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  caption,
-                  style: const TextStyle(
-                    color: FootballArena.accent,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 1.1,
+        child: Stack(
+          children: [
+            if (venue != null) ...[
+              Positioned.fill(child: FootballVenuePhoto(venue)),
+              const Positioned.fill(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Color(0xf10d1711), Color(0x77101d15)],
+                    ),
                   ),
                 ),
-                Text(
-                  arenaGameTime(game),
-                  style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: -3,
-                    height: 1.05,
-                  ),
+              ),
+            ],
+            CustomPaint(
+              painter: venue == null ? const _PitchLines() : null,
+              child: Padding(
+                padding: const EdgeInsets.all(18),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      caption,
+                      style: const TextStyle(
+                        color: FootballArena.accent,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 1.1,
+                      ),
+                    ),
+                    Text(
+                      arenaGameTime(game),
+                      style: Theme.of(context).textTheme.displayMedium
+                          ?.copyWith(
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: -3,
+                            height: 1.05,
+                          ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      '${venue?.label(l) ?? l.fdPitch(game.pitch.number)} · ${game.pitch.format}',
+                      style: const TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                    if (venue != null) Text(venue.location(l)),
+                  ],
                 ),
-                const SizedBox(height: 5),
-                Text(
-                  '${l.fdPitch(game.pitch.number)}  /  ${game.pitch.format}',
-                  style: const TextStyle(fontWeight: FontWeight.w700),
-                ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

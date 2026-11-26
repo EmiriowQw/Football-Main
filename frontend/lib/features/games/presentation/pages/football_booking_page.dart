@@ -269,6 +269,13 @@ class _FootballBookingPageState extends State<FootballBookingPage> {
                           l.fdFee(game.pitch.feeKgs),
                           style: const TextStyle(color: FootballArena.muted),
                         ),
+                        Text(
+                          l.fdPlaceholder,
+                          style: const TextStyle(
+                            color: FootballArena.muted,
+                            fontSize: 12,
+                          ),
+                        ),
                         if (past) const SizedBox(height: 10),
                         if (past)
                           Text(

@@ -14,6 +14,8 @@ import 'package:basketvibe/features/games/presentation/cubit/football_cubit.dart
 import 'package:basketvibe/features/games/presentation/pages/football_booking_page.dart';
 import 'package:basketvibe/features/games/presentation/widgets/football_arena.dart';
 import 'package:basketvibe/features/games/presentation/widgets/football_labels.dart';
+import 'package:basketvibe/features/games/presentation/widgets/football_venue_photo.dart';
+import 'package:basketvibe/features/games/presentation/widgets/football_venues.dart';
 import 'package:basketvibe/features/profile/presentation/pages/settings_page.dart';
 
 class FootballDayPage extends StatelessWidget {
@@ -91,19 +93,25 @@ class _FootballDayViewState extends State<FootballDayView> {
                   icon: const Icon(Icons.confirmation_number_outlined),
                   label: l.fdMyBookings,
                 ),
+                NavigationDestination(
+                  icon: const Icon(Icons.place_outlined),
+                  label: l.fdVenues,
+                ),
               ],
             ),
             body: SafeArea(
               bottom: false,
-              child: BlocBuilder<FootballCubit, FootballState>(
-                builder: (context, state) => _Schedule(
-                  key: ValueKey(_tab),
-                  state: state,
-                  uid: user?.uid,
-                  mineOnly: _tab == 1,
-                  openGame: (game) => _openGame(context, game),
-                ),
-              ),
+              child: _tab == 2
+                  ? const FootballVenues()
+                  : BlocBuilder<FootballCubit, FootballState>(
+                      builder: (context, state) => _Schedule(
+                        key: ValueKey(_tab),
+                        state: state,
+                        uid: user?.uid,
+                        mineOnly: _tab == 1,
+                        openGame: (game) => _openGame(context, game),
+                      ),
+                    ),
             ),
           );
         },
@@ -202,6 +210,14 @@ class _Schedule extends StatelessWidget {
           state: state,
           dateTitle: mineOnly ? l.fdMyBookings : l.fdSchedule,
         ),
+        if (!mineOnly)
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Text(
+              l.fdPlaceholder,
+              style: const TextStyle(color: FootballArena.muted, fontSize: 12),
+            ),
+          ),
         const SizedBox(height: 14),
         ArenaSwitch(
           child: Column(
@@ -277,16 +293,6 @@ class _Schedule extends StatelessWidget {
                       onTap: () => openGame(game),
                     ),
                   const SizedBox(height: 10),
-                ],
-                if (!mineOnly) ...[
-                  const SizedBox(height: 6),
-                  Text(
-                    l.fdPlaceholder,
-                    style: const TextStyle(
-                      color: FootballArena.muted,
-                      fontSize: 12,
-                    ),
-                  ),
                 ],
               ],
             ],
@@ -398,6 +404,7 @@ class _PitchRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final past = game.isPast(now);
+    final venue = FootballVenue.forPitch(game.pitch);
     final detail = booking != null
         ? '${teamLabel(l, booking!.team)} · ${l.fdTicketPlaces(booking!.places)}'
         : game.fromCache
@@ -417,12 +424,19 @@ class _PitchRow extends StatelessWidget {
             borderRadius: BorderRadius.circular(13),
           ),
           title: Text(
-            '${l.fdPitch(game.pitch.number)}  /  ${game.pitch.format}',
+            venue?.label(l) ?? l.fdPitch(game.pitch.number),
             style: const TextStyle(fontWeight: FontWeight.w800),
           ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text(
+                [
+                  venue?.format ?? game.pitch.format,
+                  if (venue != null) venue.location(l),
+                ].join(' · '),
+                style: const TextStyle(color: FootballArena.muted),
+              ),
               if (booking != null)
                 Text(
                   l.fdYourBooking,
@@ -438,6 +452,16 @@ class _PitchRow extends StatelessWidget {
               ),
             ],
           ),
+          leading: venue == null
+              ? null
+              : SizedBox(
+                  width: 54,
+                  height: 44,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: FootballVenuePhoto(venue),
+                  ),
+                ),
           trailing: const Icon(Icons.chevron_right),
           onTap: onTap,
         ),

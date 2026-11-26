@@ -911,8 +911,98 @@ abstract class AppLocalizations {
   /// No description provided for @fdPlaceholder.
   ///
   /// In en, this message translates to:
-  /// **'Pitch names and fees are placeholders. Confirm the venue and details with Football Day.'**
+  /// **'Demo bookings. See Venues for the poster schedule.'**
   String get fdPlaceholder;
+
+  /// No description provided for @fdVenues.
+  ///
+  /// In en, this message translates to:
+  /// **'Venues'**
+  String get fdVenues;
+
+  /// No description provided for @fdVenuePosterNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Times and prices from the Football Day poster. Confirm current sessions and venue entrances with the organizer.'**
+  String get fdVenuePosterNote;
+
+  /// No description provided for @fdVenuePosterServices.
+  ///
+  /// In en, this message translates to:
+  /// **'The Football Day poster also lists a referee, team bibs, and match and player stats.'**
+  String get fdVenuePosterServices;
+
+  /// No description provided for @fdVenueKfu.
+  ///
+  /// In en, this message translates to:
+  /// **'KFU'**
+  String get fdVenueKfu;
+
+  /// No description provided for @fdVenueIndoor.
+  ///
+  /// In en, this message translates to:
+  /// **'Arena · indoor pitch'**
+  String get fdVenueIndoor;
+
+  /// No description provided for @fdVenueApshyr.
+  ///
+  /// In en, this message translates to:
+  /// **'Apshyr-Ata'**
+  String get fdVenueApshyr;
+
+  /// No description provided for @fdVenueOutdoor.
+  ///
+  /// In en, this message translates to:
+  /// **'Arena · outdoor pitch'**
+  String get fdVenueOutdoor;
+
+  /// No description provided for @fdVenueGoin.
+  ///
+  /// In en, this message translates to:
+  /// **'GOIN (FC Dordoi)'**
+  String get fdVenueGoin;
+
+  /// No description provided for @fdVenueNovotel.
+  ///
+  /// In en, this message translates to:
+  /// **'Novotel'**
+  String get fdVenueNovotel;
+
+  /// No description provided for @fdVenueKfuAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Landmark: KFU, 1B Mederov St.'**
+  String get fdVenueKfuAddress;
+
+  /// No description provided for @fdVenueApshyrAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'5B Sayakbay Karalaev St.'**
+  String get fdVenueApshyrAddress;
+
+  /// No description provided for @fdVenueGoinAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Landmark: GOIN shopping center, Bishkek'**
+  String get fdVenueGoinAddress;
+
+  /// No description provided for @fdVenueNovotelAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Landmark: Novotel, 16 Manas Ave.'**
+  String get fdVenueNovotelAddress;
+
+  /// No description provided for @fdVenueUnknownAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Bishkek · exact address to be confirmed'**
+  String get fdVenueUnknownAddress;
+
+  /// No description provided for @fdVenuePrice.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} KGS'**
+  String fdVenuePrice(int amount);
 
   /// No description provided for @fdViewRoster.
   ///

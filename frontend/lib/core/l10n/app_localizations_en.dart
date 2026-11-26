@@ -440,7 +440,56 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fdPlaceholder =>
-      'Pitch names and fees are placeholders. Confirm the venue and details with Football Day.';
+      'Demo bookings. See Venues for the poster schedule.';
+
+  @override
+  String get fdVenues => 'Venues';
+
+  @override
+  String get fdVenuePosterNote =>
+      'Times and prices from the Football Day poster. Confirm current sessions and venue entrances with the organizer.';
+
+  @override
+  String get fdVenuePosterServices =>
+      'The Football Day poster also lists a referee, team bibs, and match and player stats.';
+
+  @override
+  String get fdVenueKfu => 'KFU';
+
+  @override
+  String get fdVenueIndoor => 'Arena · indoor pitch';
+
+  @override
+  String get fdVenueApshyr => 'Apshyr-Ata';
+
+  @override
+  String get fdVenueOutdoor => 'Arena · outdoor pitch';
+
+  @override
+  String get fdVenueGoin => 'GOIN (FC Dordoi)';
+
+  @override
+  String get fdVenueNovotel => 'Novotel';
+
+  @override
+  String get fdVenueKfuAddress => 'Landmark: KFU, 1B Mederov St.';
+
+  @override
+  String get fdVenueApshyrAddress => '5B Sayakbay Karalaev St.';
+
+  @override
+  String get fdVenueGoinAddress => 'Landmark: GOIN shopping center, Bishkek';
+
+  @override
+  String get fdVenueNovotelAddress => 'Landmark: Novotel, 16 Manas Ave.';
+
+  @override
+  String get fdVenueUnknownAddress => 'Bishkek · exact address to be confirmed';
+
+  @override
+  String fdVenuePrice(int amount) {
+    return '$amount KGS';
+  }
 
   @override
   String get fdViewRoster => 'View roster';

@@ -439,7 +439,56 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get fdPlaceholder =>
-      'Названия полей и тариф демонстрационные. Адрес и условия уточняйте у Football Day.';
+      'Пробная запись. Расписание с афиши — во вкладке «Площадки».';
+
+  @override
+  String get fdVenues => 'Площадки';
+
+  @override
+  String get fdVenuePosterNote =>
+      'Расписание и цены с афиши Football Day. Актуальность и вход на площадку уточняйте у организатора.';
+
+  @override
+  String get fdVenuePosterServices =>
+      'На афише Football Day также указаны судья, манишки и статистика игр и игроков.';
+
+  @override
+  String get fdVenueKfu => 'КФУ';
+
+  @override
+  String get fdVenueIndoor => 'Арена · крытое поле';
+
+  @override
+  String get fdVenueApshyr => 'Апшыр-Ата';
+
+  @override
+  String get fdVenueOutdoor => 'Арена · открытое поле';
+
+  @override
+  String get fdVenueGoin => 'ГОИН (ФК Дордой)';
+
+  @override
+  String get fdVenueNovotel => 'Новотель';
+
+  @override
+  String get fdVenueKfuAddress => 'Ориентир: КФС, ул. Медерова, 1Б';
+
+  @override
+  String get fdVenueApshyrAddress => 'ул. Саякбая Каралаева, 5Б';
+
+  @override
+  String get fdVenueGoinAddress => 'Ориентир: ТЦ «ГОИН», Бишкек';
+
+  @override
+  String get fdVenueNovotelAddress => 'Ориентир: Novotel, пр. Манаса, 16';
+
+  @override
+  String get fdVenueUnknownAddress => 'Бишкек · точный адрес уточняется';
+
+  @override
+  String fdVenuePrice(int amount) {
+    return '$amount сом';
+  }
 
   @override
   String get fdViewRoster => 'Посмотреть состав';
