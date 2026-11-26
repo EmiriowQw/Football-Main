@@ -1,59 +1,51 @@
-# Football Day
+<p align="center">
+  <img src="frontend/assets/logo/football_day_logo.png" alt="Логотип Football Day" width="96" />
+</p>
+<h1 align="center">⚽ Football Day</h1>
+<p align="center"><strong>Любительский футбол в Бишкеке. Каждый вечер.</strong></p>
+<p align="center">Выбери поле, собери друзей и займи места в одной команде.</p>
+<p align="center">
+  <a href="#-быстрый-запуск">🚀 Запуск</a> ·
+  <a href="#-как-играть">🏟️ Как играть</a> ·
+  <a href="#-документация">📚 Документация</a>
+</p>
 
-Ежедневный любительский футбол в Бишкеке. Выберите готовую игру, команду и забронируйте места для себя и друзей.
+## 🏟️ Как играть
 
-Для показа на Android-эмуляторе откройте `Start Football Day Demo.cmd`. Он запускает локальный Firebase и приложение с тестовым входом. `Start Football Day Google.cmd` открывает сборку с реальным Google-входом. Шаги показа и настройки описаны в [SETUP_AND_TESTING.md](prompts/SETUP_AND_TESTING.md).
+1. **Найди игру.** Каждый день в **18:00 и 19:00 по Бишкеку** доступны три поля. На табло видно, сколько мест свободно.
+2. **Выбери команду.** На каждом поле четыре команды. На полях 1–2 формат **5 + 1**, на поле 3 — **4 + 1**.
+3. **Забронируй места.** Можно записаться одному или добавить друзей в свою команду. Позиция по желанию: вратарь, защитник, полузащитник, нападающий или **«Без разницы»**.
+4. **Загляни в «Мои брони».** До начала игры можно поменять число мест, имена и позиции или отменить запись.
 
-Для показа на Windows скачайте `Football-Day-Demo-Windows.zip` из [GitHub Releases](https://github.com/EmiriowQw/Football-Main/releases), распакуйте архив целиком и откройте `Start Football Day Demo.cmd`. Нужен установленный Android SDK с настроенным виртуальным устройством (AVD). APK, Java и инструменты локального Firebase уже в архиве. ZIP из меню GitHub **Code → Download ZIP** содержит исходники для разработки.
+**🌙 Ночная арена** — крупное табло, анимированная полоса мест и отдельная страница брони с билетом после подтверждения.
 
-## Что реализовано
+<p align="center">
+  <img src="docs/night-arena.png" alt="Расписание Football Day в дизайне «Ночная арена»" width="340" />
+</p>
 
-- Расписание на каждый день: 18:00 и 19:00, три поля одновременно.
-- Четыре команды; поля 1–2 играют 5 + 1 (24 места), поле 3 — 4 + 1 (20 мест).
-- Вход через Google; гостям доступно расписание.
-- Отдельный экран брони: от одного места до всего остатка команды, имена друзей и позиции игроков по желанию.
-- Изменение количества, имён и позиций и отмена до начала игры, история по выбранной дате.
-- Обновление состава в реальном времени, транзакции и серверные ограничения вместимости.
-- Интерфейс RU/EN и дизайн «Ночная арена» для расписания и брони.
+## 🚀 Быстрый запуск
 
-Игроки не создают игры. Нет организаторских аккаунтов, платежей, результатов и статистики. Стоимость справочная; названия полей и тариф пока демонстрационные.
-
-## Стек
-
-Flutter, flutter_bloc, GetIt, go_router, Firebase Auth, Google Sign-In, Cloud Firestore. Существующая структура сохранена. Внутреннее имя Dart-пакета `basketvibe` оставлено для совместимости. Каталог `backend` содержит прежний Django API; бронирование Football Day использует Firestore напрямую.
-
-## Documentation
-
-Актуальная документация находится в [prompts](prompts/README.md):
-
-- [PROJECT_OVERVIEW.md](prompts/PROJECT_OVERVIEW.md) — назначение, стек, границы версии.
-- [AI_INSTRUCTIONS.md](prompts/AI_INSTRUCTIONS.md) — правила разработки и работы AI.
-- [ARCHITECTURE.md](prompts/ARCHITECTURE.md) — слои, данные и транзакции.
-- [FOLDER_STRUCTURE.md](prompts/FOLDER_STRUCTURE.md) — реальные пути файлов.
-- [UI_STYLE_GUIDE.md](prompts/UI_STYLE_GUIDE.md) — UI/UX, стили, доступность.
-- [DOMAIN_MODELS.md](prompts/DOMAIN_MODELS.md) — модели и инварианты.
-- [FEATURES_AND_RULES.md](prompts/FEATURES_AND_RULES.md) — функциональные правила и приёмка.
-- [CONTEXT_ROUTER.md](prompts/CONTEXT_ROUTER.md) — выбор документации по задаче.
-- [SETUP_AND_TESTING.md](prompts/SETUP_AND_TESTING.md) — настройка и проверки.
-- [football-day-concept.md](prompts/football-day-concept.md) — исходная концепция.
-
-Прежний путь `commands/` был неверным: старые документы находились в `frontend/commands`. Теперь они перенаправляют к актуальным инструкциям.
-
-## Запуск
-
-Из корня репозитория:
+- **🎮 Демо на Windows.** В подготовленной сборке запусти Android-эмулятор и открой [Start Football Day Demo.cmd](Start%20Football%20Day%20Demo.cmd). В приложении выбери **«Войти как демо-игрок»**. Демо использует локальный Firebase.
+- **🔑 Google-вход.** В настроенной Android-сборке открой [Start Football Day Google.cmd](Start%20Football%20Day%20Google.cmd). Для записи с позициями нужны актуальные правила Firestore.
+- **🛠️ Запуск из исходников.** Настрой Android SDK и Firebase по [инструкции](prompts/SETUP_AND_TESTING.md), затем выполни команды из корня проекта:
 
 ```powershell
 cd frontend
-Copy-Item .env.example .env  # только если .env ещё нет
+if (-not (Test-Path .env)) { Copy-Item .env.example .env }
 flutter pub get
 flutter gen-l10n
 flutter run
 ```
 
-Предварительно настройте Firebase и Google-вход для вашей платформы по [инструкции](prompts/SETUP_AND_TESTING.md). Рабочая база должна получить новые `firestore.rules`: одно изменение файла в проекте не публикует правила.
+## 🧩 Под капотом
 
-## Проверка
+**Flutter · Dart · BLoC · GetIt · go_router · Firebase Auth · Cloud Firestore**
+
+Расписание доступно гостям. Firestore обновляет состав в реальном времени и проверяет вместимость при каждой записи. Поля и тарифы демонстрационные, цена указана для справки. Интерфейс поддерживает русский и английский языки.
+
+Мобильное приложение находится в [frontend](frontend), прежний Django API — в [backend](backend). Бронирование работает напрямую через Firestore.
+
+## ✅ Проверки
 
 ```powershell
 cd frontend
@@ -64,4 +56,12 @@ npm ci
 npm test
 ```
 
-Для тестов правил нужны Node.js и Java 21+. Тесты используют отдельный локальный проект `demo-football-day`, не рабочую базу.
+Для правил Firestore нужны Node.js и Java 21+. Проверки выполняются в отдельном локальном проекте `demo-football-day`.
+
+## 📚 Документация
+
+- [🚀 Настройка и тестирование](prompts/SETUP_AND_TESTING.md)
+- [🎨 Дизайн и анимации](prompts/UI_STYLE_GUIDE.md)
+- [📋 Возможности и правила бронирования](prompts/FEATURES_AND_RULES.md)
+- [🏗️ Архитектура и данные](prompts/ARCHITECTURE.md)
+- [📖 Все документы проекта](prompts/README.md)
