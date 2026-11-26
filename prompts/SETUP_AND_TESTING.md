@@ -26,6 +26,31 @@ flutter run
 
 Необязательные публичные OAuth client ID задаются в `.env` по примеру. Android обычно получает конфигурацию Google из `android/app/google-services.json`; iOS требует соответствующую настройку клиента и URL scheme. `.env` попадает в приложение и не подходит для серверных секретов.
 
+## Сборка и запуск на iPhone
+
+Нужны macOS, Xcode 26.2 или новее, Flutter со совместимым Dart и iPhone с iOS 15 или новее. Для первой сборки можно использовать ту же версию Flutter, на которой проверен проект. [Требования Firebase](https://firebase.google.com/docs/ios/setup) · [Настройка Flutter и устройства](https://docs.flutter.dev/platform-integration/ios/setup).
+
+1. Из корня репозитория подготовьте локальные зависимости и откройте Xcode.
+
+   ```bash
+   cd frontend
+   test -f .env || cp .env.example .env
+   flutter pub get --enforce-lockfile
+   open ios/Runner.xcworkspace
+   ```
+
+2. В `Runner` → `Signing & Capabilities` выберите свою команду Apple и включите автоматическую подпись. Подключите iPhone и включите на нём Developer Mode. Для Google-входа положите `GoogleService-Info.plist` в `ios/Runner`, сверьте Bundle Identifier приложения с Firebase и URL scheme с `REVERSED_CLIENT_ID` из plist. Если регистрируете другой Bundle Identifier в Firebase, обновите и iOS-конфигурацию в `lib/firebase_options.dart`. [Настройка FlutterFire](https://firebase.google.com/docs/flutter/setup) · [Настройка Google Sign-In на iOS](https://developers.google.com/identity/sign-in/ios/start-integrating).
+3. Запустите приложение на устройстве из `frontend`.
+
+   ```bash
+   flutter devices
+   flutter run --no-pub -d <device-id>
+   ```
+
+Для повторной разработки используйте hot reload (`r` в запущенном `flutter run`). После изменения `pubspec.yaml` снова выполните `flutter pub get`. `flutter run --release --no-pub -d <device-id>` устанавливает оптимизированную сборку на подключённый iPhone.
+
+Flutter формирует пакет нативных плагинов автоматически. Swift Package Manager загружает готовые бинарники Firestore и его зависимостей при первой сборке. Для повторных сборок сохраняйте кеш Xcode и вывод Flutter, чтобы компилятор мог переиспользовать результаты. [Интеграция Swift Package Manager во Flutter](https://docs.flutter.dev/packages-and-plugins/swift-package-manager/for-app-developers) · [Дистрибуция Firestore 12.14.0](https://github.com/firebase/firebase-ios-sdk/blob/12.14.0/docs/FirestoreSPM.md).
+
 ## Firebase
 
 Android использует Firebase-проект `football-day` и зарегистрированный application ID `com.example.basketvibe`. Для другого проекта настройте платформенные приложения через FlutterFire, включите Google provider в Firebase Authentication, зарегистрируйте SHA fingerprints Android и настройте iOS URL scheme. Не коммитьте service-account keys.

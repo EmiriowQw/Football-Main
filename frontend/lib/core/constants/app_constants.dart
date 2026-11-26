@@ -7,10 +7,6 @@ class AppConstants {
   static const String appName = 'Football Day';
   static const String appVersion = '1.0.0';
 
-  // API
-  static String get apiBaseUrl =>
-      dotenv.env['API_BASE_URL'] ?? 'http://localhost:8000';
-
   // Google Sign-In
   static String? get googleServerClientId {
     final v = dotenv.env['GOOGLE_SERVER_CLIENT_ID'];
@@ -37,6 +33,5 @@ class AppConstants {
   static const int defaultPageSize = 20;
 
   // Timeouts
-  static const Duration networkTimeout = Duration(seconds: 30);
   static const Duration cacheTimeout = Duration(hours: 1);
 }

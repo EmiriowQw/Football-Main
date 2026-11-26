@@ -6,19 +6,17 @@ import 'package:basketvibe/features/auth/presentation/pages/login_page.dart';
 import 'package:basketvibe/features/home/presentation/pages/home_page.dart';
 import 'package:basketvibe/features/onboarding/presentation/bloc/onboarding_bloc.dart';
 import 'package:basketvibe/features/onboarding/presentation/pages/onboarding_page.dart';
-import 'package:basketvibe/features/onboarding/presentation/pages/splash_page.dart';
 
 class AppRouter {
   AppRouter._();
 
   static final GoRouter router = GoRouter(
-    initialLocation: RouteConstants.splash,
+    initialLocation: RouteConstants.home,
     routes: [
-      // Splash Screen → navigates to Home after delay
       GoRoute(
         path: RouteConstants.splash,
         name: 'splash',
-        builder: (context, state) => const SplashPage(),
+        redirect: (context, state) => RouteConstants.home,
       ),
 
       // Onboarding

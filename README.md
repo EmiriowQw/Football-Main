@@ -27,6 +27,7 @@
 
 - **🎮 Демо на Windows.** В подготовленной сборке запусти Android-эмулятор и открой [Start Football Day Demo.cmd](Start%20Football%20Day%20Demo.cmd). В приложении выбери **«Войти как демо-игрок»**. Демо использует локальный Firebase.
 - **🔑 Google-вход.** В настроенной Android-сборке открой [Start Football Day Google.cmd](Start%20Football%20Day%20Google.cmd). Для записи с позициями нужны актуальные правила Firestore.
+- **iPhone.** Сборка на Mac идёт через Swift Package Manager. Для запуска на своём iPhone следуй [инструкции для macOS](prompts/SETUP_AND_TESTING.md#сборка-и-запуск-на-iphone).
 - **🛠️ Запуск из исходников.** Настрой Android SDK и Firebase по [инструкции](prompts/SETUP_AND_TESTING.md), затем выполни команды из корня проекта:
 
 ```powershell

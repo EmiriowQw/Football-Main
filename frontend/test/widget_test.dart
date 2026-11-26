@@ -8,6 +8,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:basketvibe/core/l10n/app_localizations.dart';
+import 'package:basketvibe/core/network/injection.dart';
+import 'package:basketvibe/core/router/app_router.dart';
 import 'package:basketvibe/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:basketvibe/features/auth/presentation/cubit/auth_state.dart';
 import 'package:basketvibe/features/auth/presentation/pages/login_page.dart';
@@ -75,6 +77,29 @@ void main() {
       home: child,
     ),
   );
+
+  testWidgets('app router opens the football schedule on launch', (
+    tester,
+  ) async {
+    getIt.pushNewScope();
+    getIt.registerFactory<FootballCubit>(() => FootballCubit(repository));
+    addTearDown(getIt.popScope);
+
+    await tester.pumpWidget(
+      BlocProvider<AuthCubit>.value(
+        value: auth,
+        child: MaterialApp.router(
+          routerConfig: AppRouter.router,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+        ),
+      ),
+    );
+    await tester.pump();
+
+    expect(find.byType(FootballDayView), findsOneWidget);
+    await tester.pumpWidget(const SizedBox());
+  });
 
   testWidgets('login fits a narrow screen with large Russian text', (
     tester,

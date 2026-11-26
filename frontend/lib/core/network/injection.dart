@@ -1,6 +1,4 @@
 import 'package:basketvibe/core/local_storage/local_storage_service.dart';
-import 'package:basketvibe/core/network/dio_network.dart';
-import 'package:basketvibe/core/services/secure_token_storage.dart';
 import 'package:basketvibe/features/auth/data/datasources/remote/auth_remote_datasource.dart';
 import 'package:basketvibe/features/auth/data/datasources/remote/google_sign_in_datasource.dart';
 import 'package:basketvibe/features/auth/data/datasources/remote/user_remote_datasource.dart';
@@ -23,7 +21,6 @@ import 'package:basketvibe/features/profile/domain/usecases/update_profile_use_c
 import 'package:basketvibe/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:basketvibe/features/onboarding/domain/usecases/set_onboarding_complete_usecase.dart';
 import 'package:basketvibe/features/onboarding/presentation/bloc/onboarding_bloc.dart';
-import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:basketvibe/features/games/domain/repositories/football_repository.dart';
 import 'package:basketvibe/features/games/data/repositories/firestore_football_repository.dart';
@@ -38,15 +35,9 @@ Future<void> configureDependencies({
 }) async {
   final prefs = await SharedPreferences.getInstance();
 
-  // Storage
   getIt.registerLazySingleton<LocalStorageService>(
     () => LocalStorageServiceImpl(prefs),
   );
-  getIt.registerLazySingleton<SecureTokenStorage>(() => SecureTokenStorage());
-
-  // Network
-  DioNetwork.initDio();
-  getIt.registerLazySingleton<Dio>(() => DioNetwork.appAPI);
 
   // Firebase
   getIt.registerLazySingleton<FirebaseAuth>(
@@ -56,7 +47,7 @@ Future<void> configureDependencies({
     () => firestore ?? FirebaseFirestore.instance,
   );
 
-  // Data sources
+  // Sign-in and account management
   getIt.registerLazySingleton<AuthRemoteDataSource>(
     () => AuthRemoteDataSource(getIt()),
   );
@@ -66,46 +57,17 @@ Future<void> configureDependencies({
   getIt.registerLazySingleton<GoogleSignInDatasource>(
     () => GoogleSignInDatasource(),
   );
-
-  // Courts
-  getIt.registerLazySingleton<CourtRemoteDataSource>(
-    () => CourtRemoteDataSource(getIt()),
+  getIt.registerFactory<AuthCubit>(
+    () => AuthCubit(getIt(), getIt(), getIt(), getIt(), getIt()),
   );
-  getIt.registerLazySingleton<SportTypeRemoteDataSource>(
-    () => SportTypeRemoteDataSource(getIt()),
-  );
-  getIt.registerFactory<CourtsCubit>(() => CourtsCubit(getIt(), getIt()));
 
-  // Game
+  // Football schedule and bookings
   getIt.registerLazySingleton<FootballRepository>(
     () => FirestoreFootballRepository(getIt()),
   );
   getIt.registerFactory<FootballCubit>(() => FootballCubit(getIt()));
-  getIt.registerLazySingleton<GameRemoteDataSource>(
-    () => GameRemoteDataSource(getIt()),
-  );
-  getIt.registerLazySingleton<GameRepository>(
-    () => GameRepositoryImpl(getIt()),
-  );
 
-  // Profile
-  getIt.registerLazySingleton<ProfileRemoteDataSource>(
-    () => ProfileRemoteDataSource(getIt()),
-  );
-  getIt.registerLazySingleton<ProfileRepository>(
-    () => ProfileRepositoryImpl(getIt()),
-  );
-  getIt.registerFactory<GetProfileUseCase>(() => GetProfileUseCase(getIt()));
-  getIt.registerFactory<UpdateProfileUseCase>(
-    () => UpdateProfileUseCase(getIt()),
-  );
-
-  // Cubits / Blocs
-  getIt.registerFactory<ProfileCubit>(() => ProfileCubit(getIt(), getIt()));
-  getIt.registerFactory<AuthCubit>(
-    () => AuthCubit(getIt(), getIt(), getIt(), getIt(), getIt()),
-  );
-  getIt.registerFactory<GameCubit>(() => GameCubit(getIt()));
+  // Onboarding
   getIt.registerFactory<CheckOnboardingStatusUseCase>(
     () => CheckOnboardingStatusUseCase(getIt()),
   );
@@ -118,4 +80,34 @@ Future<void> configureDependencies({
       setOnboardingCompleteUseCase: getIt(),
     ),
   );
+
+  // Legacy screens use these lazy registrations when opened.
+  getIt.registerLazySingleton<CourtRemoteDataSource>(
+    () => CourtRemoteDataSource(getIt()),
+  );
+  getIt.registerLazySingleton<SportTypeRemoteDataSource>(
+    () => SportTypeRemoteDataSource(getIt()),
+  );
+  getIt.registerFactory<CourtsCubit>(() => CourtsCubit(getIt(), getIt()));
+
+  getIt.registerLazySingleton<GameRemoteDataSource>(
+    () => GameRemoteDataSource(getIt()),
+  );
+  getIt.registerLazySingleton<GameRepository>(
+    () => GameRepositoryImpl(getIt()),
+  );
+  getIt.registerFactory<GameCubit>(() => GameCubit(getIt()));
+
+  getIt.registerLazySingleton<ProfileRemoteDataSource>(
+    () => ProfileRemoteDataSource(getIt()),
+  );
+  getIt.registerLazySingleton<ProfileRepository>(
+    () => ProfileRepositoryImpl(getIt()),
+  );
+  getIt.registerFactory<GetProfileUseCase>(() => GetProfileUseCase(getIt()));
+  getIt.registerFactory<UpdateProfileUseCase>(
+    () => UpdateProfileUseCase(getIt()),
+  );
+
+  getIt.registerFactory<ProfileCubit>(() => ProfileCubit(getIt(), getIt()));
 }
