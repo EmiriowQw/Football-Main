@@ -6,15 +6,11 @@ import 'package:basketvibe/core/app/demo_mode.dart';
 import 'package:basketvibe/core/constants/app_constants.dart';
 
 class GoogleSignInDatasource {
-  late final GoogleSignIn _client;
-
-  GoogleSignInDatasource() {
-    _client = GoogleSignIn(
-      scopes: ['email', 'profile'],
-      clientId: AppConstants.googleIosClientId,
-      serverClientId: AppConstants.googleServerClientId,
-    );
-  }
+  late final _client = GoogleSignIn(
+    scopes: ['email', 'profile'],
+    clientId: AppConstants.googleIosClientId,
+    serverClientId: AppConstants.googleServerClientId,
+  );
 
   /// Returns null if user cancels sign-in.
   Future<String?> signInAndGetIdToken() async {

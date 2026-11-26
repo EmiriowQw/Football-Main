@@ -11,6 +11,8 @@
 *.keystore
 google-services.json
 GoogleService-Info.plist
+# Public Firebase client configuration for the registered Football Day iOS app.
+!/ios/Runner/GoogleService-Info.plist
 android/key.properties
 
 # Build configuration with secrets

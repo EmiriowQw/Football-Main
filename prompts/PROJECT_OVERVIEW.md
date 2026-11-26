@@ -16,7 +16,7 @@ Football Day помогает записаться на ежедневный л�
 
 Flutter/Dart, Material, flutter_bloc, GetIt, go_router, Firebase Auth + Google Sign-In, Cloud Firestore и SharedPreferences. Старые экраны карт используют flutter_map. Django в `backend` обслуживает прежний API. Бронирование обращается напрямую к Firestore.
 
-Публичное название — Football Day. Внутреннее имя Dart-пакета `basketvibe` и идентификаторы Firebase сохранены: переименование идентификаторов не является частью продуктового ребрендинга.
+Публичное название — Football Day. Внутреннее имя Dart-пакета — `basketvibe`. Android сохраняет идентификатор `com.example.basketvibe`, iOS использует `com.emiriowqw.footballday`. Обе платформы и веб-версия подключаются к Firebase `football-day`.
 
 ## Настройки и допущения
 

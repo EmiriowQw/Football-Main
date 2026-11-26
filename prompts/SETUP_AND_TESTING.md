@@ -1,5 +1,13 @@
 # Настройка и проверка Football Day
 
+## Показ на iPhone через Safari
+
+1. Откройте [Football Day](https://football-day.firebaseapp.com/) в Safari. Для ярлыка на экране «Домой» выберите **Поделиться → На экран «Домой»**.
+2. Выберите завтрашний день и поле. Войдите через Google. Если Safari блокирует окно входа, разрешите всплывающие окна для показа и повторите вход.
+3. Выберите команду, забронируйте два места и добавьте пожелания по позициям. Откройте «Мои брони», покажите редактирование и после показа отмените бронь, чтобы освободить места.
+
+Safari использует Firebase проекта Football Day и сохраняет настоящие брони. Понадобятся интернет и аккаунт Google. Safari-версия открывается и без установки подписанной нативной сборки.
+
 ## Показ на Android без аккаунта Google
 
 Для повторного показа откройте `Start Football Day Demo.cmd` в корне проекта. Из PowerShell можно запустить `./frontend/tool/run_demo.ps1`. Скрипт использует установленный Android-эмулятор, поднимает Firebase Auth и Firestore локально и открывает APK. На этой машине Java 21, зависимости Firebase CLI и Android Virtual Device уже подготовлены.
@@ -10,7 +18,7 @@
 
 Локальный режим использует Firebase-проект `demo-football-day`. Тестовая личность создаётся в Auth Emulator, а брони проходят через те же транзакции и правила Firestore. Этот вход не обращается к Google и доступен только в debug-сборке с `FOOTBALL_DEMO=true`. Данные демо хранятся в работающем локальном эмуляторе и сбрасываются при его перезапуске. Не останавливайте эмуляторы во время показа.
 
-Для настоящего входа откройте `Start Football Day Google.cmd` или запустите `./frontend/tool/run_demo.ps1 -Cloud`. Обычная Android-сборка подключена к `football-day`, Google-провайдер включён, SHA-1 этой debug-подписи зарегистрирован и правила Firestore опубликованы. Настоящий вход потребует выбрать Google-аккаунт в Android. Если собираете другим ключом, зарегистрируйте его SHA-1. iOS в рамках Android-демо не перенастраивалась.
+Для настоящего входа откройте `Start Football Day Google.cmd` или запустите `./frontend/tool/run_demo.ps1 -Cloud`. Обычная Android-сборка подключена к `football-day`, Google-провайдер включён, SHA-1 этой debug-подписи зарегистрирован и правила Firestore опубликованы. Настоящий вход потребует выбрать Google-аккаунт в Android. Если собираете другим ключом, зарегистрируйте его SHA-1.
 
 ## Локальный запуск
 
@@ -24,7 +32,7 @@ flutter gen-l10n
 flutter run
 ```
 
-Необязательные публичные OAuth client ID задаются в `.env` по примеру. Android обычно получает конфигурацию Google из `android/app/google-services.json`; iOS требует соответствующую настройку клиента и URL scheme. `.env` попадает в приложение и не подходит для серверных секретов.
+Необязательные публичные OAuth client ID задаются в `.env` по примеру. Android получает конфигурацию Google из `android/app/google-services.json`, а iOS использует уже включённый в проект `ios/Runner/GoogleService-Info.plist`. `.env` попадает в приложение и не подходит для серверных секретов.
 
 ## Сборка и запуск на iPhone
 
@@ -36,10 +44,11 @@ flutter run
    cd frontend
    test -f .env || cp .env.example .env
    flutter pub get --enforce-lockfile
+   flutter build ios --config-only --no-codesign --no-pub
    open ios/Runner.xcworkspace
    ```
 
-2. В `Runner` → `Signing & Capabilities` выберите свою команду Apple и включите автоматическую подпись. Подключите iPhone и включите на нём Developer Mode. Для Google-входа положите `GoogleService-Info.plist` в `ios/Runner`, сверьте Bundle Identifier приложения с Firebase и URL scheme с `REVERSED_CLIENT_ID` из plist. Если регистрируете другой Bundle Identifier в Firebase, обновите и iOS-конфигурацию в `lib/firebase_options.dart`. [Настройка FlutterFire](https://firebase.google.com/docs/flutter/setup) · [Настройка Google Sign-In на iOS](https://developers.google.com/identity/sign-in/ios/start-integrating).
+2. В `Runner` → `Signing & Capabilities` выберите свою команду Apple и включите автоматическую подпись. Подключите iPhone и включите на нём Developer Mode. Сохраните Bundle Identifier `com.emiriowqw.footballday`. Firebase уже зарегистрирован для него, а plist и схема возврата Google включены в проект. Скачивать Firebase-файлы вручную не нужно. [Настройка Google Sign-In на iOS](https://developers.google.com/identity/sign-in/ios/start-integrating).
 3. Запустите приложение на устройстве из `frontend`.
 
    ```bash
@@ -49,11 +58,15 @@ flutter run
 
 Для повторной разработки используйте hot reload (`r` в запущенном `flutter run`). После изменения `pubspec.yaml` снова выполните `flutter pub get`. `flutter run --release --no-pub -d <device-id>` устанавливает оптимизированную сборку на подключённый iPhone.
 
+Для установки по приглашению TestFlight нужны Apple Developer Program и карточка приложения в App Store Connect с тем же Bundle Identifier. После настройки подписи выполните `flutter build ipa --release` из `frontend` и загрузите архив через Xcode. [Руководство Flutter по публикации iOS](https://docs.flutter.dev/deployment/ios).
+
 Flutter формирует пакет нативных плагинов автоматически. Swift Package Manager загружает готовые бинарники Firestore и его зависимостей при первой сборке. Для повторных сборок сохраняйте кеш Xcode и вывод Flutter, чтобы компилятор мог переиспользовать результаты. [Интеграция Swift Package Manager во Flutter](https://docs.flutter.dev/packages-and-plugins/swift-package-manager/for-app-developers) · [Дистрибуция Firestore 12.14.0](https://github.com/firebase/firebase-ios-sdk/blob/12.14.0/docs/FirestoreSPM.md).
 
 ## Firebase
 
-Android использует Firebase-проект `football-day` и зарегистрированный application ID `com.example.basketvibe`. Для другого проекта настройте платформенные приложения через FlutterFire, включите Google provider в Firebase Authentication, зарегистрируйте SHA fingerprints Android и настройте iOS URL scheme. Не коммитьте service-account keys.
+Android (`com.example.basketvibe`), iOS (`com.emiriowqw.footballday`) и Safari используют Firebase-проект `football-day`. Для другого проекта настройте платформенные приложения через FlutterFire, включите Google provider в Firebase Authentication, зарегистрируйте SHA fingerprints Android, настройте iOS URL scheme и авторизованный домен для веб-входа. Не коммитьте service-account keys.
+
+Для обновления Safari-версии из `frontend` выполните `flutter build web --release`, затем `firebase deploy --only hosting --project football-day`. Основной адрес показа — `football-day.firebaseapp.com`, он совпадает с доменом Firebase Auth.
 
 Новая коллекция: `footballBookings`. Первичная загрузка или seed не требуются: приложение вычисляет расписание, а документ состава появляется при первой записи. Старые данные `/games` не мигрируются автоматически, старые клиенты больше не могут их изменять после публикации правил.
 

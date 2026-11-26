@@ -3,6 +3,11 @@
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json"
   },
+  "hosting": {
+    "public": "build/web",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [{ "source": "**", "destination": "/index.html" }]
+  },
   "flutter": {
     "platforms": {
       "android": {
@@ -12,11 +17,21 @@
           "fileOutput": "android/app/google-services.json"
         }
       },
+      "ios": {
+        "default": {
+          "projectId": "football-day",
+          "appId": "1:1044539186696:ios:6e10d14a7a5f11d18ebbbd",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
       "dart": {
         "lib/firebase_options.dart": {
           "projectId": "football-day",
           "configurations": {
-            "android": "1:1044539186696:android:2adc7f40fe48a26a8ebbbd"
+            "android": "1:1044539186696:android:2adc7f40fe48a26a8ebbbd",
+            "ios": "1:1044539186696:ios:6e10d14a7a5f11d18ebbbd",
+            "web": "1:1044539186696:web:81d39bc45adac1168ebbbd"
           }
         }
       }

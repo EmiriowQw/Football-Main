@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:basketvibe/core/local_storage/local_storage_keys.dart';
 import 'package:basketvibe/core/local_storage/local_storage_service.dart';
@@ -25,10 +26,12 @@ class AuthCubit extends Cubit<AuthState> {
   final GoogleSignInDatasource _googleSignIn;
   final FootballRepository _gameDataSource;
 
-  /// Firebase persists the session and refreshes tokens itself —
-  /// a non-null currentUser means we are logged in.
   Future<void> checkAuthStatus() async {
-    if (_remoteDataSource.currentUser != null) {
+    final user = kIsWeb
+        ? await _remoteDataSource.authStateChanges().first
+        : _remoteDataSource.currentUser;
+    if (isClosed || state is! AuthInitial) return;
+    if (user != null) {
       emit(const AuthAuthenticated(isNewUser: false));
     } else {
       emit(const AuthUnauthenticated());
@@ -39,13 +42,13 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       emit(const AuthLoading());
 
-      final idToken = await _googleSignIn.signInAndGetIdToken();
-      if (idToken == null) {
+      final result = await _remoteDataSource.googleSignIn(
+        _googleSignIn.signInAndGetIdToken,
+      );
+      if (result == null) {
         emit(const AuthUnauthenticated());
         return;
       }
-
-      final result = await _remoteDataSource.googleSignIn(idToken);
 
       await _userDataSource.ensureUserDocument(
         _remoteDataSource.currentUser!,
@@ -64,7 +67,7 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> logout() async {
     await Future.wait([
       _remoteDataSource.signOut(),
-      _googleSignIn.signOut(),
+      if (!kIsWeb) _googleSignIn.signOut(),
       _localStorage.setBool(LocalStorageKeys.isLoggedIn, false),
       _localStorage.remove(LocalStorageKeys.userId),
     ]);
@@ -84,10 +87,11 @@ class AuthCubit extends Cubit<AuthState> {
 
     emit(const AuthLoading());
     try {
-      // 1. Get a fresh Google token; if the user cancels, abort before
-      //    touching any data.
-      final idToken = await _googleSignIn.signInAndGetIdToken();
-      if (idToken == null) {
+      final reauthenticated = await _remoteDataSource.reauthenticateWithGoogle(
+        user,
+        _googleSignIn.signInAndGetIdToken,
+      );
+      if (!reauthenticated) {
         emit(const AuthAuthenticated(isNewUser: false));
         return;
       }
@@ -98,19 +102,14 @@ class AuthCubit extends Cubit<AuthState> {
         emit(const AuthAuthenticated(isNewUser: false));
         return;
       }
-      await user.reauthenticateWithCredential(
-        GoogleAuthProvider.credential(idToken: idToken),
-      );
       await _userDataSource.deleteUser(user.uid);
-
-      // 3. Re-authenticate (recent-login) and delete the auth user.
-      await _remoteDataSource.deleteAccount(idToken);
+      await user.delete();
 
       // 4. Clear local session.
       await Future.wait([
         _localStorage.setBool(LocalStorageKeys.isLoggedIn, false),
         _localStorage.remove(LocalStorageKeys.userId),
-        _googleSignIn.signOut(),
+        if (!kIsWeb) _googleSignIn.signOut(),
       ]);
       emit(const AuthUnauthenticated());
     } on FirebaseAuthException catch (e) {

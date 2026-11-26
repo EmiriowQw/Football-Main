@@ -16,12 +16,7 @@ import 'package:flutter/foundation.dart'
 /// ```
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
-    if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
-    }
+    if (kIsWeb) return web;
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
@@ -57,16 +52,22 @@ class DefaultFirebaseOptions {
     storageBucket: 'football-day.firebasestorage.app',
   );
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDqGRPQDrWmIVwIXKieEHV5MmPKNcmpQaY',
-    appId: '1:309064225610:ios:e2cd5bca814eda0c79e7b3',
-    messagingSenderId: '309064225610',
-    projectId: 'line-up-cefa8',
-    databaseURL: 'https://line-up-cefa8-default-rtdb.firebaseio.com',
-    storageBucket: 'line-up-cefa8.firebasestorage.app',
-    androidClientId:
-        '309064225610-knffttue2iu8v4qurorq0qfsebtmhatp.apps.googleusercontent.com',
+    apiKey: 'AIzaSyD7ihFHoowekzZXdqt_AHwEJsUuuQ4xJ6o',
+    appId: '1:1044539186696:ios:6e10d14a7a5f11d18ebbbd',
+    messagingSenderId: '1044539186696',
+    projectId: 'football-day',
+    storageBucket: 'football-day.firebasestorage.app',
     iosClientId:
-        '309064225610-g7j7ue350eau1ikmlmi81kijgrooobio.apps.googleusercontent.com',
-    iosBundleId: 'com.example.basketvibe',
+        '1044539186696-3edno8so8m6ts4gt6a8iembu8bv6o4lr.apps.googleusercontent.com',
+    iosBundleId: 'com.emiriowqw.footballday',
+  );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDttIvNIdv-bUFwnsZpPoPttEe_9_8GM0I',
+    appId: '1:1044539186696:web:81d39bc45adac1168ebbbd',
+    messagingSenderId: '1044539186696',
+    projectId: 'football-day',
+    authDomain: 'football-day.firebaseapp.com',
+    storageBucket: 'football-day.firebasestorage.app',
   );
 }
