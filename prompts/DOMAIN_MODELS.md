@@ -14,6 +14,8 @@
 
 Один UID имеет одну бронь в игре. Вся группа находится в одной команде. При редактировании команды должны совпасть; место владельца всегда входит в `places`. Отмена освобождает все места брони.
 
+`position` — пожелание владельца, `friendPositions` — пожелания друзей по индексу места, до N − 1. Допустимы `any`, `goalkeeper`, `defender`, `midfielder`, `forward`. Отсутствующие поля и индексы означают `any` («Без разницы»). Позиции видны в составе и не влияют на счётчики мест или возможность выбрать вратаря нескольким игрокам.
+
 ## Firestore
 
 `footballBookings/{epochSeconds_pitchId}`:
@@ -21,7 +23,7 @@
 ```text
 startTime: Timestamp
 pitchId: "pitch1"
-bookings: { uid: { team, places, bookerName, friendNames } }
+bookings: { uid: { team, places, bookerName, friendNames, position?, friendPositions? } }
 counts: { red: 0..capacity, blue: 0..capacity,
           yellow: 0..capacity, green: 0..capacity }
 ```

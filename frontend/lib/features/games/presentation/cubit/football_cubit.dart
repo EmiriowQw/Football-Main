@@ -20,7 +20,7 @@ class FootballState {
 
 class FootballCubit extends Cubit<FootballState> {
   FootballCubit(this._repository)
-    : super(FootballState(date: FootballSchedule.today())) {
+    : super(FootballState(date: FootballSchedule.defaultDay())) {
     selectDate(state.date);
     _timer = Timer.periodic(const Duration(seconds: 15), (_) {
       if (!isClosed) _publish();

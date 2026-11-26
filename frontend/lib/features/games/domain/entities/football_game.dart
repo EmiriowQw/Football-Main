@@ -1,5 +1,7 @@
 enum FootballTeam { red, blue, yellow, green }
 
+enum FootballPosition { any, goalkeeper, defender, midfielder, forward }
+
 class PitchPreset {
   const PitchPreset(this.id, this.number, this.outfieldPlayers, this.feeKgs);
   final String id;
@@ -27,6 +29,14 @@ class FootballSchedule {
     return DateTime.utc(local.year, local.month, local.day);
   }
 
+  static DateTime defaultDay([DateTime? now]) {
+    final instant = now ?? DateTime.now();
+    final date = today(instant);
+    return bishkekTime(instant).hour < hours.last
+        ? date
+        : date.add(const Duration(days: 1));
+  }
+
   static List<FootballGame> forDay(DateTime date) => [
     for (final hour in hours)
       for (final pitch in pitches)
@@ -48,13 +58,23 @@ class Booking {
     required this.team,
     required this.places,
     required this.bookerName,
+    this.position = FootballPosition.any,
     List<String> friendNames = const [],
-  }) : friendNames = List.unmodifiable(friendNames);
+    List<FootballPosition> friendPositions = const [],
+  }) : friendNames = List.unmodifiable(friendNames),
+       friendPositions = List.unmodifiable(friendPositions);
   final String userId;
   final FootballTeam team;
   final int places;
   final String bookerName;
+  final FootballPosition position;
   final List<String> friendNames;
+  final List<FootballPosition> friendPositions;
+
+  FootballPosition positionForFriend(int index) =>
+      index < friendPositions.length
+      ? friendPositions[index]
+      : FootballPosition.any;
 }
 
 enum BookingFailure { started, full, teamChange, invalid, unavailable, signIn }
@@ -99,6 +119,7 @@ class FootballGame {
         booking.bookerName.trim().isEmpty ||
         booking.bookerName.length > 80 ||
         booking.friendNames.length > booking.places - 1 ||
+        booking.friendPositions.length > booking.places - 1 ||
         booking.friendNames.any((name) => name.length > 80)) {
       throw const BookingException(BookingFailure.invalid);
     }

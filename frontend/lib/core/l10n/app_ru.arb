@@ -205,5 +205,34 @@
   "fdStart": "Начать",
   "fdCancelBeforeDelete": "Сначала отмените будущие брони в разделе «Мои брони», затем повторите удаление аккаунта.",
   "fdDemoSignIn": "Войти как демо-игрок",
-  "fdDemoNotice": "Локальное демо. Используется тестовый аккаунт и тестовые брони."
+  "fdDemoNotice": "Локальное демо. Используется тестовый аккаунт и тестовые брони.",
+  "fdUpcomingGame": "Ближайшая игра",
+  "fdTomorrow": "Завтра",
+  "fdAvailabilityUnknown": "Места уточняются",
+  "fdBookingTitle": "Бронь поля",
+  "fdPositionAny": "Без разницы",
+  "fdPositionGoalkeeper": "Вратарь",
+  "fdPositionDefender": "Защитник",
+  "fdPositionMidfielder": "Полузащитник",
+  "fdPositionForward": "Нападающий",
+  "fdYourPosition": "Твоя позиция",
+  "fdPositionHint": "По желанию. Это подсказка для состава, а не распределение по позициям.",
+  "fdFriendPosition": "Позиция друга {number}",
+  "fdTicketPlaces": "{count, plural, one{{count} место} few{{count} места} other{{count} мест}}",
+  "fdEmptyRoster": "В составе пока никого нет",
+  "fdInTheGame": "Ты в игре",
+  "@fdFriendPosition": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "@fdTicketPlaces": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

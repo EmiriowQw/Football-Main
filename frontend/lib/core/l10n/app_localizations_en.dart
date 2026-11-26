@@ -525,4 +525,59 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get fdDemoNotice =>
       'Local demo. Uses a test account and test bookings.';
+
+  @override
+  String get fdUpcomingGame => 'Next game';
+
+  @override
+  String get fdTomorrow => 'Tomorrow';
+
+  @override
+  String get fdAvailabilityUnknown => 'Checking availability';
+
+  @override
+  String get fdBookingTitle => 'Book a pitch';
+
+  @override
+  String get fdPositionAny => 'No preference';
+
+  @override
+  String get fdPositionGoalkeeper => 'Goalkeeper';
+
+  @override
+  String get fdPositionDefender => 'Defender';
+
+  @override
+  String get fdPositionMidfielder => 'Midfielder';
+
+  @override
+  String get fdPositionForward => 'Forward';
+
+  @override
+  String get fdYourPosition => 'Your position';
+
+  @override
+  String get fdPositionHint => 'Optional. This is a preference for the roster.';
+
+  @override
+  String fdFriendPosition(int number) {
+    return 'Friend $number’s position';
+  }
+
+  @override
+  String fdTicketPlaces(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count spots',
+      one: '$count spot',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get fdEmptyRoster => 'No players in the roster yet';
+
+  @override
+  String get fdInTheGame => 'You’re in';
 }

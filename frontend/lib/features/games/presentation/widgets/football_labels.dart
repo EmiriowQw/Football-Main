@@ -10,6 +10,15 @@ String teamLabel(AppLocalizations l, FootballTeam team) => switch (team) {
   FootballTeam.green => l.fdGreen,
 };
 
+String positionLabel(AppLocalizations l, FootballPosition position) =>
+    switch (position) {
+      FootballPosition.any => l.fdPositionAny,
+      FootballPosition.goalkeeper => l.fdPositionGoalkeeper,
+      FootballPosition.defender => l.fdPositionDefender,
+      FootballPosition.midfielder => l.fdPositionMidfielder,
+      FootballPosition.forward => l.fdPositionForward,
+    };
+
 Color teamColor(FootballTeam team) => switch (team) {
   FootballTeam.red => AppColors.error,
   FootballTeam.blue => AppColors.info,

@@ -1045,6 +1045,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Local demo. Uses a test account and test bookings.'**
   String get fdDemoNotice;
+
+  /// No description provided for @fdUpcomingGame.
+  ///
+  /// In en, this message translates to:
+  /// **'Next game'**
+  String get fdUpcomingGame;
+
+  /// No description provided for @fdTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow'**
+  String get fdTomorrow;
+
+  /// No description provided for @fdAvailabilityUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking availability'**
+  String get fdAvailabilityUnknown;
+
+  /// No description provided for @fdBookingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Book a pitch'**
+  String get fdBookingTitle;
+
+  /// No description provided for @fdPositionAny.
+  ///
+  /// In en, this message translates to:
+  /// **'No preference'**
+  String get fdPositionAny;
+
+  /// No description provided for @fdPositionGoalkeeper.
+  ///
+  /// In en, this message translates to:
+  /// **'Goalkeeper'**
+  String get fdPositionGoalkeeper;
+
+  /// No description provided for @fdPositionDefender.
+  ///
+  /// In en, this message translates to:
+  /// **'Defender'**
+  String get fdPositionDefender;
+
+  /// No description provided for @fdPositionMidfielder.
+  ///
+  /// In en, this message translates to:
+  /// **'Midfielder'**
+  String get fdPositionMidfielder;
+
+  /// No description provided for @fdPositionForward.
+  ///
+  /// In en, this message translates to:
+  /// **'Forward'**
+  String get fdPositionForward;
+
+  /// No description provided for @fdYourPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Your position'**
+  String get fdYourPosition;
+
+  /// No description provided for @fdPositionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional. This is a preference for the roster.'**
+  String get fdPositionHint;
+
+  /// No description provided for @fdFriendPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend {number}’s position'**
+  String fdFriendPosition(int number);
+
+  /// No description provided for @fdTicketPlaces.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} spot} other{{count} spots}}'**
+  String fdTicketPlaces(int count);
+
+  /// No description provided for @fdEmptyRoster.
+  ///
+  /// In en, this message translates to:
+  /// **'No players in the roster yet'**
+  String get fdEmptyRoster;
+
+  /// No description provided for @fdInTheGame.
+  ///
+  /// In en, this message translates to:
+  /// **'You’re in'**
+  String get fdInTheGame;
 }
 
 class _AppLocalizationsDelegate

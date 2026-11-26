@@ -524,4 +524,61 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get fdDemoNotice =>
       'Локальное демо. Используется тестовый аккаунт и тестовые брони.';
+
+  @override
+  String get fdUpcomingGame => 'Ближайшая игра';
+
+  @override
+  String get fdTomorrow => 'Завтра';
+
+  @override
+  String get fdAvailabilityUnknown => 'Места уточняются';
+
+  @override
+  String get fdBookingTitle => 'Бронь поля';
+
+  @override
+  String get fdPositionAny => 'Без разницы';
+
+  @override
+  String get fdPositionGoalkeeper => 'Вратарь';
+
+  @override
+  String get fdPositionDefender => 'Защитник';
+
+  @override
+  String get fdPositionMidfielder => 'Полузащитник';
+
+  @override
+  String get fdPositionForward => 'Нападающий';
+
+  @override
+  String get fdYourPosition => 'Твоя позиция';
+
+  @override
+  String get fdPositionHint =>
+      'По желанию. Это подсказка для состава, а не распределение по позициям.';
+
+  @override
+  String fdFriendPosition(int number) {
+    return 'Позиция друга $number';
+  }
+
+  @override
+  String fdTicketPlaces(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count мест',
+      few: '$count места',
+      one: '$count место',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get fdEmptyRoster => 'В составе пока никого нет';
+
+  @override
+  String get fdInTheGame => 'Ты в игре';
 }

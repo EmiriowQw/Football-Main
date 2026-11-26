@@ -63,7 +63,10 @@ if (-not $Cloud) {
         } else {
             $node = (Get-Command node).Source
             $localJava = Get-ChildItem (Join-Path $repo '.tools\jdk21') -Directory -ErrorAction SilentlyContinue | Select-Object -First 1
-            if ($localJava) { $settings['JAVA_HOME'] = $localJava.FullName }
+            if ($localJava) {
+                $settings['JAVA_HOME'] = $localJava.FullName
+                $settings['PATH'] = (Join-Path $localJava.FullName 'bin') + ';' + $env:PATH
+            }
         }
         New-Item -ItemType Directory -Force (Join-Path $frontend 'build') | Out-Null
         try {

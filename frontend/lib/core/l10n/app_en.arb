@@ -226,5 +226,34 @@
   "fdStart": "Get started",
   "fdCancelBeforeDelete": "Cancel your upcoming bookings in My bookings before deleting your account.",
   "fdDemoSignIn": "Sign in as demo player",
-  "fdDemoNotice": "Local demo. Uses a test account and test bookings."
+  "fdDemoNotice": "Local demo. Uses a test account and test bookings.",
+  "fdUpcomingGame": "Next game",
+  "fdTomorrow": "Tomorrow",
+  "fdAvailabilityUnknown": "Checking availability",
+  "fdBookingTitle": "Book a pitch",
+  "fdPositionAny": "No preference",
+  "fdPositionGoalkeeper": "Goalkeeper",
+  "fdPositionDefender": "Defender",
+  "fdPositionMidfielder": "Midfielder",
+  "fdPositionForward": "Forward",
+  "fdYourPosition": "Your position",
+  "fdPositionHint": "Optional. This is a preference for the roster.",
+  "fdFriendPosition": "Friend {number}’s position",
+  "fdTicketPlaces": "{count, plural, one{{count} spot} other{{count} spots}}",
+  "fdEmptyRoster": "No players in the roster yet",
+  "fdInTheGame": "You’re in",
+  "@fdFriendPosition": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "@fdTicketPlaces": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

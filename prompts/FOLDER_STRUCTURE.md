@@ -18,7 +18,8 @@ frontend/
     data/repositories/firestore_football_repository.dart
     presentation/cubit/football_cubit.dart
     presentation/pages/football_day_page.dart
-    presentation/widgets/football_booking_sheet.dart
+    presentation/pages/football_booking_page.dart
+    presentation/widgets/football_arena.dart
   lib/features/auth/              существующий Google-вход
   lib/features/profile/           профиль и настройки
   test/                          unit/widget-тесты

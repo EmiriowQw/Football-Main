@@ -28,26 +28,47 @@ class FirestoreFootballRepository implements FootballRepository {
             places: b['places'] as int,
             bookerName: b['bookerName'] as String,
             friendNames: List<String>.from(b['friendNames'] as List),
+            position: _position(b['position']),
+            friendPositions: (b['friendPositions'] as List? ?? const [])
+                .map(_position)
+                .toList(),
           ),
         );
       }),
     );
   }
 
-  Map<String, dynamic> _encode(FootballGame game) => {
+  FootballPosition _position(Object? value) =>
+      FootballPosition.values.firstWhere(
+        (position) => position.name == value,
+        orElse: () => FootballPosition.any,
+      );
+
+  Map<String, dynamic> _encode(
+    FootballGame game,
+    Map<String, dynamic> bookings,
+  ) => {
     'startTime': Timestamp.fromDate(game.startTime),
     'pitchId': game.pitch.id,
     'counts': {
       for (final team in FootballTeam.values) team.name: game.used(team),
     },
-    'bookings': game.bookings.map(
-      (uid, b) => MapEntry(uid, {
-        'team': b.team.name,
-        'places': b.places,
-        'bookerName': b.bookerName,
-        'friendNames': b.friendNames,
-      }),
-    ),
+    'bookings': bookings,
+  };
+
+  Map<String, dynamic> _encodeBooking(Booking booking) => {
+    'team': booking.team.name,
+    'places': booking.places,
+    'bookerName': booking.bookerName,
+    'friendNames': booking.friendNames,
+    if (booking.position != FootballPosition.any)
+      'position': booking.position.name,
+    if (booking.friendPositions.any(
+      (position) => position != FootballPosition.any,
+    ))
+      'friendPositions': booking.friendPositions
+          .map((position) => position.name)
+          .toList(),
   };
 
   @override
@@ -82,23 +103,41 @@ class FirestoreFootballRepository implements FootballRepository {
   }
 
   @override
-  Future<void> save(FootballGame game, Booking booking) =>
-      _mutate(game, (current) => current.save(booking, DateTime.now().toUtc()));
+  Future<void> save(FootballGame game, Booking booking) => _mutate(
+    game,
+    booking.userId,
+    (current) => current.save(booking, DateTime.now().toUtc()),
+  );
 
   @override
-  Future<void> cancel(FootballGame game, String uid) =>
-      _mutate(game, (current) => current.cancel(uid, DateTime.now().toUtc()));
+  Future<void> cancel(FootballGame game, String uid) => _mutate(
+    game,
+    uid,
+    (current) => current.cancel(uid, DateTime.now().toUtc()),
+  );
 
   Future<void> _mutate(
     FootballGame preset,
+    String uid,
     FootballGame Function(FootballGame) update,
   ) async {
     try {
       await _db.runTransaction((transaction) async {
         final ref = _collection.doc(preset.id);
         final snapshot = await transaction.get(ref);
-        final current = _decode(preset, snapshot.data());
-        transaction.set(ref, _encode(update(current)));
+        final data = snapshot.data();
+        final current = _decode(preset, data);
+        final updated = update(current);
+        final bookings = Map<String, dynamic>.of(
+          data?['bookings'] as Map<String, dynamic>? ?? {},
+        );
+        final ownBooking = updated.bookings[uid];
+        if (ownBooking == null) {
+          bookings.remove(uid);
+        } else {
+          bookings[uid] = _encodeBooking(ownBooking);
+        }
+        transaction.set(ref, _encode(updated, bookings));
       });
     } on FirebaseException catch (e) {
       if (e.code == 'permission-denied' && preset.isPast(DateTime.now())) {

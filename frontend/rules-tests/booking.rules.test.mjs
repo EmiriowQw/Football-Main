@@ -21,8 +21,9 @@ const data = (bookings = {}, pitchId = 'pitch1', start = startTime) => ({
 const db = uid => env.authenticatedContext(uid, { firebase: { sign_in_provider: 'google.com' } }).firestore();
 
 before(async () => {
-  env = await initializeTestEnvironment({ projectId: 'demo-football-day',
-    firestore: { host: '127.0.0.1', port: 8088, rules: await readFile('../firestore.rules', 'utf8') } });
+  const [host, port] = (process.env.FIRESTORE_EMULATOR_HOST ?? '127.0.0.1:8088').split(':');
+  env = await initializeTestEnvironment({ projectId: process.env.GCLOUD_PROJECT ?? 'demo-football-day',
+    firestore: { host, port: Number(port), rules: await readFile('../firestore.rules', 'utf8') } });
 });
 beforeEach(async () => env.clearFirestore());
 after(async () => env?.cleanup());
@@ -56,6 +57,33 @@ test('cannot edit someone else, transfer teams, forge counters or metadata', asy
   await assertFails(setDoc(ref, { ...data({ alice: booking(3) }), counts: { red: 2, blue: 0, yellow: 0, green: 0 } }));
   await assertFails(setDoc(ref, { ...data({ alice: booking(3) }), paid: true }));
   await assertFails(setDoc(ref, data({ alice: booking(2) }, 'pitch2')));
+});
+
+test('position preferences coexist with old bookings and do not change capacity', async () => {
+  const alice = doc(db('alice'), path);
+  const bob = doc(db('bob'), path);
+  const oldBooking = booking(2);
+  await assertSucceeds(setDoc(alice, data({ alice: oldBooking })));
+  const withPositions = { ...booking(3), position: 'goalkeeper', friendPositions: ['any', 'goalkeeper'] };
+  await assertSucceeds(setDoc(bob, data({ alice: oldBooking, bob: withPositions })));
+  const result = (await getDoc(alice)).data();
+  assert.deepEqual(result.bookings.alice, oldBooking);
+  assert.deepEqual(result.bookings.bob, withPositions);
+  assert.equal(result.counts.red, 5);
+  await assertFails(setDoc(alice, data({ alice: oldBooking, bob: { ...withPositions, position: 'defender' } })));
+  await assertSucceeds(setDoc(bob, data({ alice: oldBooking, bob: { ...withPositions, position: 'defender' } })));
+});
+
+test('position preference values and friend list bounds are validated', async () => {
+  for (const invalid of [
+    { ...booking(2), position: 'coach' },
+    { ...booking(2), position: 1 },
+    { ...booking(2), friendPositions: ['defender', 'forward'] },
+    { ...booking(2), friendPositions: ['referee'] },
+    { ...booking(2), friendPositions: 'defender' },
+  ]) {
+    await assertFails(setDoc(doc(db('alice'), path), data({ alice: invalid })));
+  }
 });
 
 test('only canonical preset IDs and exact hours allowed', async () => {

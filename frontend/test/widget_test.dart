@@ -14,7 +14,7 @@ import 'package:basketvibe/features/auth/presentation/pages/login_page.dart';
 import 'package:basketvibe/features/games/domain/entities/football_game.dart';
 import 'package:basketvibe/features/games/presentation/cubit/football_cubit.dart';
 import 'package:basketvibe/features/games/presentation/pages/football_day_page.dart';
-import 'package:basketvibe/features/games/presentation/widgets/football_booking_sheet.dart';
+import 'package:basketvibe/features/games/presentation/pages/football_booking_page.dart';
 import 'support/football_repository_fake.dart';
 
 class TestAuthCubit extends MockCubit<AuthState> implements AuthCubit {}
@@ -113,8 +113,8 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(find.text('FOOTBALL DAY'), findsOneWidget);
-      expect(find.text('Выбери поле.\nСобери своих.'), findsOneWidget);
-      expect(find.text('Поле 1'), findsWidgets);
+      expect(find.text('БЛИЖАЙШАЯ ИГРА'), findsOneWidget);
+      expect(find.textContaining('Поле 1'), findsWidgets);
       expect(find.byType(FloatingActionButton), findsNothing);
       expect(tester.takeException(), isNull);
       final boundary =
@@ -128,6 +128,14 @@ void main() {
         ).writeAsBytes(bytes!.buffer.asUint8List());
         image.dispose();
       });
+      await tester.tap(find.text('Выбрать команду'));
+      await tester.pumpAndSettle();
+      expect(find.byType(FootballBookingPage), findsOneWidget);
+      expect(find.text('Бронь поля'), findsOneWidget);
+      expect(find.textContaining('Поле 1'), findsOneWidget);
+      expect(find.text('Войти через Google'), findsOneWidget);
+      await tester.binding.handlePopRoute();
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Мои брони'));
       await tester.pumpAndSettle();
       expect(find.text('Войти через Google'), findsOneWidget);
@@ -145,7 +153,7 @@ void main() {
     await tester.pumpWidget(
       shell(
         Scaffold(
-          body: FootballBookingSheet(
+          body: FootballBookingPage(
             gameId: repository.games.first.id,
             uid: 'alice',
             bookerName: 'Alice',
@@ -154,17 +162,35 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Выбрать').first);
+    await tester.tap(find.text('Красная').first);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Все свободные места'));
     await tester.pumpAndSettle();
     expect(find.byType(TextField), findsNWidgets(5));
+    expect(
+      tester
+          .widget<ChoiceChip>(find.widgetWithText(ChoiceChip, 'Без разницы'))
+          .selected,
+      isTrue,
+    );
+    await tester.tap(find.widgetWithText(ChoiceChip, 'Защитник'));
+    await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField).first, 'Sam');
+    final friendPosition = find.byKey(const ValueKey('friend-position-0'));
+    await tester.ensureVisible(friendPosition);
+    await tester.tap(friendPosition);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Вратарь').last);
+    await tester.pumpAndSettle();
     await tester.ensureVisible(find.text('Забронировать'));
     await tester.tap(find.text('Забронировать'));
     await tester.pumpAndSettle();
     expect(repository.saved!.places, 6);
     expect(repository.saved!.team, FootballTeam.red);
+    expect(repository.saved!.position, FootballPosition.defender);
+    expect(repository.saved!.positionForFriend(0), FootballPosition.goalkeeper);
+    expect(repository.saved!.positionForFriend(1), FootballPosition.any);
+    expect(find.text('Ты в игре'), findsOneWidget);
     expect(repository.saved!.friendNames.first, 'Sam');
     expect(repository.saved!.friendNames.skip(1).every((n) => n.isEmpty), true);
     expect(tester.takeException(), isNull);
@@ -178,7 +204,7 @@ void main() {
     await tester.pumpWidget(
       shell(
         Scaffold(
-          body: FootballBookingSheet(
+          body: FootballBookingPage(
             gameId: repository.games.first.id,
             uid: 'alice',
             bookerName: 'Alice',
@@ -187,7 +213,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Выбрать').first);
+    await tester.tap(find.text('Красная').first);
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.text('Забронировать'));
     await tester.tap(find.text('Забронировать'));
@@ -223,7 +249,7 @@ void main() {
     await tester.pumpWidget(
       shell(
         Scaffold(
-          body: FootballBookingSheet(
+          body: FootballBookingPage(
             gameId: past.id,
             uid: 'alice',
             bookerName: 'Alice',

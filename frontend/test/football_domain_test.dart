@@ -45,6 +45,16 @@ void main() {
       DateTime.utc(2030),
     );
   });
+  test('schedule opens tomorrow once the last Bishkek slot starts', () {
+    expect(
+      FootballSchedule.defaultDay(DateTime.utc(2030, 6, 15, 12, 59)),
+      date,
+    );
+    expect(
+      FootballSchedule.defaultDay(DateTime.utc(2030, 6, 15, 13)),
+      date.add(const Duration(days: 1)),
+    );
+  });
   test('group takes one team; other teams stay available', () {
     final game = FootballSchedule.forDay(
       date,

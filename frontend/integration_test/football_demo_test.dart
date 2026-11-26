@@ -47,8 +47,7 @@ void main() {
     if (skip.evaluate().isNotEmpty) await tapText('Пропустить');
     await waitFor(find.text('FOOTBALL DAY'));
     await tapText('Расписание');
-    await tester.tap(find.byTooltip('Следующий день'));
-    await tester.pumpAndSettle();
+    await tapText('Завтра');
     final choose = find.text('Выбрать команду');
     for (var i = 0; i < 8 && choose.hitTestable().evaluate().isEmpty; i++) {
       await tester.drag(find.byType(ListView).first, const Offset(0, -220));
@@ -56,7 +55,8 @@ void main() {
     }
     await tapText('Выбрать команду');
     await tester.pumpAndSettle();
-    await tapText('Выбрать');
+    await waitFor(find.text('Бронь поля'));
+    await tapText('Красная');
     await tester.scrollUntilVisible(
       find.byTooltip('Больше мест'),
       230,
@@ -64,20 +64,35 @@ void main() {
     );
     await tester.tap(find.byTooltip('Больше мест'));
     await tester.pumpAndSettle();
+    final defender = find.widgetWithText(ChoiceChip, 'Защитник');
+    await tester.ensureVisible(defender);
+    await tapText('Защитник');
     final friend = find.byType(TextField).first;
     await tester.ensureVisible(friend);
     await tester.enterText(friend, 'Марат');
     FocusManager.instance.primaryFocus?.unfocus();
     await tester.pumpAndSettle();
+    final friendPosition = find.byKey(const ValueKey('friend-position-0'));
+    await tester.ensureVisible(friendPosition);
+    await tester.tap(friendPosition);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Вратарь').last);
+    await tester.pumpAndSettle();
     await tester.ensureVisible(find.text('Забронировать'));
     await tapText('Забронировать');
     await waitFor(find.text('Бронь подтверждена'));
+    await waitFor(find.text('Ты в игре'));
+    await tapText('Готово');
     await tapText('Мои брони');
     await tapText('Ваша бронь');
-    await tester.scrollUntilVisible(
-      find.text('Сохранить'),
-      230,
-      scrollable: find.byType(Scrollable).last,
+    await waitFor(defender);
+    expect(tester.widget<ChoiceChip>(defender).selected, isTrue);
+    expect(
+      tester
+          .widget<DropdownButtonFormField>(friendPosition)
+          .initialValue
+          .toString(),
+      endsWith('.goalkeeper'),
     );
     await tester.ensureVisible(friend);
     expect(find.text('Марат'), findsWidgets);
