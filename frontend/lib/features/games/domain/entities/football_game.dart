@@ -61,8 +61,10 @@ class Booking {
     this.position = FootballPosition.any,
     List<String> friendNames = const [],
     List<FootballPosition> friendPositions = const [],
+    List<bool> rightPositions = const [],
   }) : friendNames = List.unmodifiable(friendNames),
-       friendPositions = List.unmodifiable(friendPositions);
+       friendPositions = List.unmodifiable(friendPositions),
+       rightPositions = List.unmodifiable(rightPositions);
   final String userId;
   final FootballTeam team;
   final int places;
@@ -70,6 +72,10 @@ class Booking {
   final FootballPosition position;
   final List<String> friendNames;
   final List<FootballPosition> friendPositions;
+  final List<bool> rightPositions;
+
+  bool isPositionRight(int player) =>
+      player < rightPositions.length && rightPositions[player];
 
   FootballPosition positionForFriend(int index) =>
       index < friendPositions.length
@@ -120,6 +126,7 @@ class FootballGame {
         booking.bookerName.length > 80 ||
         booking.friendNames.length > booking.places - 1 ||
         booking.friendPositions.length > booking.places - 1 ||
+        booking.rightPositions.length > booking.places ||
         booking.friendNames.any((name) => name.length > 80)) {
       throw const BookingException(BookingFailure.invalid);
     }

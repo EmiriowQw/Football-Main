@@ -64,14 +64,15 @@ test('position preferences coexist with old bookings and do not change capacity'
   const bob = doc(db('bob'), path);
   const oldBooking = booking(2);
   await assertSucceeds(setDoc(alice, data({ alice: oldBooking })));
-  const withPositions = { ...booking(3), position: 'goalkeeper', friendPositions: ['any', 'goalkeeper'] };
+  const withPositions = { ...booking(3), position: 'defender', friendPositions: ['any', 'goalkeeper'], rightPositions: [true, false, false] };
   await assertSucceeds(setDoc(bob, data({ alice: oldBooking, bob: withPositions })));
   const result = (await getDoc(alice)).data();
   assert.deepEqual(result.bookings.alice, oldBooking);
   assert.deepEqual(result.bookings.bob, withPositions);
   assert.equal(result.counts.red, 5);
-  await assertFails(setDoc(alice, data({ alice: oldBooking, bob: { ...withPositions, position: 'defender' } })));
-  await assertSucceeds(setDoc(bob, data({ alice: oldBooking, bob: { ...withPositions, position: 'defender' } })));
+  const switchedSide = { ...withPositions, rightPositions: [false, false, false] };
+  await assertFails(setDoc(alice, data({ alice: oldBooking, bob: switchedSide })));
+  await assertSucceeds(setDoc(bob, data({ alice: oldBooking, bob: switchedSide })));
 });
 
 test('position preference values and friend list bounds are validated', async () => {
@@ -81,6 +82,8 @@ test('position preference values and friend list bounds are validated', async ()
     { ...booking(2), friendPositions: ['defender', 'forward'] },
     { ...booking(2), friendPositions: ['referee'] },
     { ...booking(2), friendPositions: 'defender' },
+    { ...booking(2), rightPositions: [true, false, true] },
+    { ...booking(2), rightPositions: [true, 'left'] },
   ]) {
     await assertFails(setDoc(doc(db('alice'), path), data({ alice: invalid })));
   }

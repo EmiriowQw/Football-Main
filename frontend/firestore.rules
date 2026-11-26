@@ -44,10 +44,19 @@ service cloud.firestore {
           && validFriendPosition(positions, 2) && validFriendPosition(positions, 3)
           && validFriendPosition(positions, 4);
       }
+      function validSide(sides, i) {
+        return sides.size() <= i || sides[i] is bool;
+      }
+      function validPositionSides(b) {
+        let sides = b.get('rightPositions', []);
+        return sides is list && sides.size() <= b.places
+          && validSide(sides, 0) && validSide(sides, 1) && validSide(sides, 2)
+          && validSide(sides, 3) && validSide(sides, 4) && validSide(sides, 5);
+      }
       function validBooking(b, cap) {
         return b is map
           && b.keys().hasAll(['team', 'places', 'bookerName', 'friendNames'])
-          && b.keys().hasOnly(['team', 'places', 'bookerName', 'friendNames', 'position', 'friendPositions'])
+          && b.keys().hasOnly(['team', 'places', 'bookerName', 'friendNames', 'position', 'friendPositions', 'rightPositions'])
           && b.team in ['red', 'blue', 'yellow', 'green']
           && b.places is int && b.places >= 1 && b.places <= cap
           && b.bookerName is string && b.bookerName.size() > 0 && b.bookerName.size() <= 80
@@ -56,7 +65,8 @@ service cloud.firestore {
           && validName(b.friendNames, 0) && validName(b.friendNames, 1)
           && validName(b.friendNames, 2) && validName(b.friendNames, 3)
           && validName(b.friendNames, 4)
-          && validPosition(b.get('position', 'any')) && validFriendPositions(b);
+          && validPosition(b.get('position', 'any')) && validFriendPositions(b)
+          && validPositionSides(b);
       }
       function places(b, team) { return b.get('team', '') == team ? b.places : 0; }
       function countValid(d, oldCounts, before, after, team) {

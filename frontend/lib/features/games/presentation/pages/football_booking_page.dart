@@ -40,6 +40,7 @@ class _FootballBookingPageState extends State<FootballBookingPage> {
   Booking? _confirmed;
   final _friends = List.generate(5, (_) => TextEditingController());
   final _friendPositions = List.filled(5, FootballPosition.any);
+  final _rightPositions = List.filled(6, false);
 
   @override
   void dispose() {
@@ -56,6 +57,9 @@ class _FootballBookingPageState extends State<FootballBookingPage> {
     _team = mine.team;
     _places = mine.places;
     _position = mine.position;
+    for (var i = 0; i < mine.places; i++) {
+      _rightPositions[i] = mine.isPositionRight(i);
+    }
     for (var i = 0; i < mine.places - 1; i++) {
       if (i < mine.friendNames.length) _friends[i].text = mine.friendNames[i];
       _friendPositions[i] = mine.positionForFriend(i);
@@ -72,6 +76,7 @@ class _FootballBookingPageState extends State<FootballBookingPage> {
       places: _places,
       bookerName: widget.bookerName,
       position: _position,
+      rightPositions: _rightPositions.take(_places).toList(),
       friendNames: _friends
           .take(_places - 1)
           .map((friend) => friend.text.trim())
@@ -445,9 +450,10 @@ class _FootballBookingPageState extends State<FootballBookingPage> {
     final guest = widget.uid == null;
     final player = _formationPlayer;
     final position = player == 0 ? _position : _friendPositions[player - 1];
-    void select(FootballPosition value) {
+    void select(FootballPosition value, bool right) {
       HapticFeedback.selectionClick();
       setState(() {
+        _rightPositions[player] = right;
         if (player == 0) {
           _position = value;
         } else {
@@ -499,6 +505,7 @@ class _FootballBookingPageState extends State<FootballBookingPage> {
         FootballFormation(
           pitch: pitch,
           position: position,
+          right: _rightPositions[player],
           onChanged: locked ? null : select,
         ),
         if (!guest)
@@ -519,7 +526,9 @@ class _FootballBookingPageState extends State<FootballBookingPage> {
               ),
               if (position != FootballPosition.any)
                 TextButton(
-                  onPressed: locked ? null : () => select(FootballPosition.any),
+                  onPressed: locked
+                      ? null
+                      : () => select(FootballPosition.any, false),
                   child: Text(l.fdPositionAny),
                 ),
             ],

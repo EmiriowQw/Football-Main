@@ -220,10 +220,24 @@ void main() {
     expect(find.text('Без разницы'), findsOneWidget);
     expect(find.byTooltip('Защитник'), findsNWidgets(2));
     expect(find.byTooltip('Полузащитник'), findsNWidgets(2));
-    final defender = find.byTooltip('Защитник').first;
+    final defender = find.byTooltip('Защитник').last;
     await tester.ensureVisible(defender);
     await tester.tap(defender);
     await tester.pumpAndSettle();
+    final activeMarker = find.byWidgetPredicate(
+      (widget) => widget is Semantics && widget.properties.selected == true,
+    );
+    expect(
+      find.descendant(of: defender, matching: activeMarker),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(
+        of: find.byTooltip('Защитник').first,
+        matching: activeMarker,
+      ),
+      findsNothing,
+    );
     await tester.tap(find.widgetWithText(TextButton, 'Без разницы'));
     await tester.pumpAndSettle();
     final selected = find.byKey(const ValueKey('formation-selected-position'));
@@ -245,6 +259,8 @@ void main() {
     expect(repository.saved!.places, 6);
     expect(repository.saved!.team, FootballTeam.red);
     expect(repository.saved!.position, FootballPosition.defender);
+    expect(repository.saved!.isPositionRight(0), isTrue);
+    expect(repository.saved!.isPositionRight(1), isFalse);
     expect(repository.saved!.positionForFriend(0), FootballPosition.goalkeeper);
     expect(repository.saved!.positionForFriend(1), FootballPosition.any);
     expect(find.text('Ты в игре'), findsOneWidget);

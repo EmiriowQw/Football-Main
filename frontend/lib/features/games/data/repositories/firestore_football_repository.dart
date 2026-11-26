@@ -29,6 +29,7 @@ class FirestoreFootballRepository implements FootballRepository {
             bookerName: b['bookerName'] as String,
             friendNames: List<String>.from(b['friendNames'] as List),
             position: _position(b['position']),
+            rightPositions: List<bool>.from(b['rightPositions'] as List? ?? []),
             friendPositions: (b['friendPositions'] as List? ?? const [])
                 .map(_position)
                 .toList(),
@@ -61,6 +62,8 @@ class FirestoreFootballRepository implements FootballRepository {
     'places': booking.places,
     'bookerName': booking.bookerName,
     'friendNames': booking.friendNames,
+    if (booking.rightPositions.contains(true))
+      'rightPositions': booking.rightPositions,
     if (booking.position != FootballPosition.any)
       'position': booking.position.name,
     if (booking.friendPositions.any(

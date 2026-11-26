@@ -9,12 +9,14 @@ class FootballFormation extends StatelessWidget {
     super.key,
     required this.pitch,
     required this.position,
+    required this.right,
     required this.onChanged,
   });
 
   final PitchPreset pitch;
   final FootballPosition position;
-  final ValueChanged<FootballPosition>? onChanged;
+  final bool right;
+  final void Function(FootballPosition, bool)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -54,10 +56,10 @@ class FootballFormation extends StatelessWidget {
                         key: ValueKey('formation-${role.name}-$index'),
                         label: positionLabel(l, role),
                         short: short,
-                        active: position == role,
+                        active: position == role && right == (point.dx > .5),
                         onPressed: onChanged == null
                             ? null
-                            : () => onChanged!(role),
+                            : () => onChanged!(role, point.dx > .5),
                       ),
                     ),
                 ],
